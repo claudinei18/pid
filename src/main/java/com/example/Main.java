@@ -76,6 +76,8 @@ public class Main {
     } else {
       HikariConfig config = new HikariConfig();
       config.setJdbcUrl(dbUrl);
+      config.setUsername("claudinei");
+      config.setPassword("1234");
       return new HikariDataSource(config);
     }
   }

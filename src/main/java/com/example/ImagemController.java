@@ -31,7 +31,7 @@ public class ImagemController {
         try {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename());
+            Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/" + file.getOriginalFilename());
             Files.write(path, bytes);
 
         } catch (IOException e) {

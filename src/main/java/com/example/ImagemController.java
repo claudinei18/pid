@@ -34,6 +34,7 @@ public class ImagemController {
             Path path = Paths.get("/tmp/" + file.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println("Criou");
+            System.out.println(path.getFileName());
             System.out.println(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename());
             System.out.println(Files.exists(Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename() + "/" + file.getOriginalFilename())));
 

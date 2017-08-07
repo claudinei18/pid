@@ -33,6 +33,7 @@ public class ImagemController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename());
             Files.write(path, bytes);
+            System.out.println("Criou");
 
         } catch (IOException e) {
             e.printStackTrace();

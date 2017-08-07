@@ -31,7 +31,7 @@ public class ImagemController {
         try {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("/tmp/" + file.getOriginalFilename());
+            Path path = Paths.get("../tmp/" + file.getOriginalFilename());
             Files.write(path, bytes);
             System.out.println("Criou");
             System.out.println(path.getFileName());

@@ -25,6 +25,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -43,6 +46,19 @@ public class Main {
 
   @Autowired
   private DataSource dataSource;
+
+
+  @Bean
+  WebMvcConfigurer configurer () {
+    return new WebMvcConfigurerAdapter() {
+      @Override
+      public void addResourceHandlers (ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/imagens/**").
+                addResourceLocations("file:/home/claudinei/Documentos/pidImagens/");
+      }
+    };
+  }
+
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Main.class, args);

@@ -1,9 +1,5 @@
 angular.module('pid', ['ngRoute'])
 
-    .controller('MainCtrl', function ($scope, $http) {
-
-    })
-
 // configure our routes
 .config(function($routeProvider) {
     $routeProvider
@@ -15,7 +11,7 @@ angular.module('pid', ['ngRoute'])
         })
 
         // route for the about page
-        .when('/about', {
+        .when('/selectFunctions', {
             templateUrl : 'selectFunctions/selectFunctions.html',
             controller  : 'MainCtrl'
         });

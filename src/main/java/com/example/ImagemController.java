@@ -1,5 +1,7 @@
 package com.example;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,27 +27,44 @@ public class ImagemController {
     @RequestMapping(value = "/imagem", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity<Void> inserirImagem(@RequestParam(name = "arquivo", required = false) MultipartFile file) {
+    ResponseEntity<?> inserirImagem(@RequestParam(name = "arquivo", required = true) MultipartFile file,
+                                       @RequestParam(name = "codigo",  required = true) String codigo) {
+
+        String root = System.getProperty("user.dir") + "/src/main/resources/static/imagens/";
+
+        File folderImage = new File(root + codigo);
+        if(folderImage.exists()){
+            folderImage.delete();
+        }
+
+        folderImage.mkdir();
+
+
+        System.out.println(codigo);
 
         if (file.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
+        Path path = null;
         try {
             // Get the file and save it somewhere
             byte[] bytes = file.getBytes();
-            Path path = Paths.get("../tmp/" + file.getOriginalFilename());
+            path = Paths.get(folderImage.getPath() + "/" + file.getOriginalFilename());
             Files.write(path, bytes);
-            System.out.println("Criou");
-            System.out.println(path.getFileName());
-            System.out.println(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename());
-            System.out.println(Files.exists(Paths.get(System.getProperty("user.dir") + "/src/main/resources/static/imagens/" + file.getOriginalFilename() + "/" + file.getOriginalFilename())));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return ResponseEntity.ok().build();
+        JSONObject json = new JSONObject();
+        try {
+            json.put("path", path.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok(json.toString());
 
     }
 

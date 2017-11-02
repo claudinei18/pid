@@ -1,4 +1,4 @@
-angular.module('pid', ['ngRoute'])
+angular.module('pid', ['ngRoute', 'ui.select', 'ngSanitize'])
 
 // configure our routes
 .config(function($routeProvider) {

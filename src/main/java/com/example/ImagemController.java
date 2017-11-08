@@ -180,7 +180,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", fileName);
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
+                        jsonObject.put("url" , "http://172.17.0.39:9203/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
                         if(fileName.endsWith("negative")){
                             jsonObject.put("nomeTransformacao", "Negativo Digital");
                             jsonObject.put("descricaoTransformacao", "O negativo digital ...");

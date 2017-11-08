@@ -1,7 +1,7 @@
 angular.module('pid')
     .controller('MainCtrl', function ($scope, $rootScope, $http, $dialogs, $timeout) {
 
-        $scope.url = "http://localhost:5000/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
+        $scope.url = "http://172.17.0.39:9203/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
 
         $scope.imagens = [];
 
@@ -107,7 +107,7 @@ angular.module('pid')
 
 
         $scope.runFuntions = function (body) {
-            $http.post('http://localhost:5000/rest/funcoes', body).then(function (response) {
+            $http.post('/rest/funcoes', body).then(function (response) {
                 if (response.data) {
                     $scope.msg = "Post Data Submitted Successfully!";
                     console.log(response);
@@ -140,10 +140,29 @@ angular.module('pid')
             for (var i = 0; i < 256; i++) {
                 labels[i] = "" + i;
             }
+	    var backgroundColor = [];
+	    for (var i = 0; i < 256; i++) {
+	        backgroundColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 0.2)'
+    	    }
+	    var borderColor = [];
+	    for (var i = 0; i < 256; i++) {
+        	borderColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 1)'
+	    }
+	    console.log(backgroundColor)
+	    console.log(borderColor)
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
+		    backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+        	        'rgba(54, 162, 235, 0.2)',
+                	'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+        	        'rgba(153, 102, 255, 0.2)',
+                	'rgba(255, 159, 64, 0.2)'
+	            ],
+		    borderColor: borderColor,
                     datasets: [{
                         label: '# of Pixels',
                         data: $scope.histogramaImagemOriginal,
@@ -160,6 +179,13 @@ angular.module('pid')
                     }
                 }
             });
+
+	    //for (var i = 0; i < 256; i++) {
+            //    myChart.data.datasets[i].fillColor = 'rgba(' + i + ',' + i + ',' + i + ', 0.2)';
+            //}
+   
+
+	    
         }
 
 

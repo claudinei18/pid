@@ -67,40 +67,12 @@ angular.module('pid')
 
         $scope.runTransformacoes = function () {
 
-
-            var temOutraImagem = false;
-            var chamouRunFunctions = false;
-
-
-            for (var i = 0; i < $scope.functionsSelected.length; i++) {
-                console.log($scope.functionsSelected[i].nome)
-                if ($scope.functionsSelected[i].nome === 'Soma' ||
-                    $scope.functionsSelected[i].nome === 'Subtração') {
-                    temOutraImagem = true;
-                    if(i == $scope.functionsSelected.length - 1){
-                        $scope.uploadImagem(i, true);
-                        chamouRunFunctions = true;
-                    }else{
-                        $scope.uploadImagem(i, false);
-                    }
-                }else if(i == $scope.functionsSelected.length - 1){
-                    var body = {
-                        codeImagemOriginal: $rootScope.codigoImagem,
-                        nomeImagem: $rootScope.nomeImagem,
-                        funcoes: $scope.functionsSelected
-                    };
-                    $scope.runFuntions(body);
-                }
-            }
-
-            if(temOutraImagem == false){
-                var body = {
-                    codeImagemOriginal: $rootScope.codigoImagem,
-                    nomeImagem: $rootScope.nomeImagem,
-                    funcoes: $scope.functionsSelected
-                };
-                $scope.runFuntions(body);
-            }
+            var body = {
+                codeImagemOriginal: $rootScope.codigoImagem,
+                nomeImagem: $rootScope.nomeImagem,
+                funcoes: $scope.functionsSelected
+            };
+            $scope.runFuntions(body);
 
 
         }
@@ -189,7 +161,7 @@ angular.module('pid')
         }
 
 
-        $scope.uploadImagem = function (i, run) {
+        $scope.uploadImagem = function (i) {
             $scope.desativado = true;
             console.log("Uploading")
 
@@ -218,16 +190,6 @@ angular.module('pid')
                 $rootScope.nomeImagemSomada = response.data.nomeImagem;
 
                 $scope.functionsSelected[i].imagem2 = $rootScope.pathImagemSomada;
-
-                if(run){
-                    var body = {
-                        codeImagemOriginal: $rootScope.codigoImagem,
-                        nomeImagem: $rootScope.nomeImagem,
-                        funcoes: $scope.functionsSelected
-                    };
-                    console.log("chamaaandoooo")
-                    $scope.runFuntions(body);
-                }
 
             });
         };

@@ -19,7 +19,9 @@ public class SumImage extends Filter implements Filterable {
         
         BufferedImage img1 = this.openImage(params.get(0));
         BufferedImage img2 = this.openImage(params.get(1));
-        this.setFilteredImageName("sum "+params.get(1));
+        String[] aux = params.get(1).split("/");
+        String nome = aux[aux.length - 1];
+        this.setFilteredImageName("sum "+nome);
         
         for(int i=0; i<img1.getWidth(); i++){
             for(int j=0; j<img1.getHeight(); j++){

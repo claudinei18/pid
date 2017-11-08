@@ -56,7 +56,7 @@ angular.module('pid')
             {nome: "MAX"},
             {nome: "Logarítmica", c: 1},
             {nome: "Potência", c: 1, gama: 1},
-            {nome: "Tresholding", limiar: 1, cor1: 1, intensidade1: 1},
+            {nome: "Tresholding", limiar: 1, cor1: 1, cor2: 1},
             {nome: "Soma", imagem2: ""},
             {nome: "Subtração", imagem2: ""},
             {nome: "Gaussiano", c: 1},
@@ -85,10 +85,19 @@ angular.module('pid')
                     console.log(response);
                     console.log(response.data)
                     $scope.imagens = response.data;
-                    $scope.histogramaImagemOriginal = JSON.parse(response.data[0].histogramaDaImagemOriginal);
+                    $scope.histogramaImagemOriginal = JSON.parse(response.data[response.data.length - 1].histogramaImagemOriginal);
                     console.log($scope.imagens);
 
                     $scope.desenharGrafico();
+                    for(var j = 0; j < $scope.imagens.length; j++){
+                        console.log($scope.imagens[j].nomeTransformacao)
+                        var nome = $scope.imagens[j].nomeTransformacao
+                        if(nome == 'Equalização de Histrograma'){
+                            console.log("Desenhando")
+                            $scope.desenharGraficoOutroHistograma(JSON.parse($scope.imagens[j].histogramaEqualizado));
+                        }
+                    }
+
                 }
             }, function (response) {
                 $scope.msg = "Service not Exists";
@@ -119,6 +128,35 @@ angular.module('pid')
                     datasets: [{
                         label: '# of Pixels',
                         data: $scope.histogramaImagemOriginal,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        $scope.desenharGraficoOutroHistograma = function (hist) {
+            var ctx = document.getElementById("equalizacao").getContext('2d');
+            var labels = [];
+            for (var i = 0; i < 256; i++) {
+                labels[i] = "" + i;
+            }
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Pixels',
+                        data: hist,
                         borderWidth: 1
                     }]
                 },
@@ -167,4 +205,15 @@ angular.module('pid')
 
             });
         };
+
+        $scope.compararHistogramas = function () {
+            for(var i = 0; i < $scope.functionsSelected.length; i++){
+                if($scope.functionsSelected[i].hasOwnProperty('nome') &&
+                    $scope.functionsSelected[i].nome == 'Equalização de Histograma'){
+                    return true;
+                }
+            }
+            return false
+
+        }
     })

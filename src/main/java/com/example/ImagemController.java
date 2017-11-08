@@ -92,6 +92,8 @@ public class ImagemController {
 
         List<String> params = null;
 
+        JSONArray jsonArray = new JSONArray();
+
         for(int i = 0; i < jsonArray3.length(); i++){
             System.out.println("ENTROU 1 " + jsonArray3.length());
             try {
@@ -110,56 +112,185 @@ public class ImagemController {
                         System.out.println("Negativo");
                         new DigitalNegative().filter(params);
                         lastUsed += "_negative";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Negativo Digital");
+                        jsonObject.put("descricaoTransformacao", "O negativo digital ...");
+
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("Equalização de Histograma")){
                         System.out.println("Equalização");
                         new HistogramEqualization().filter(params);
                         lastUsed += "_histogram";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Equalização de Histrograma");
+                        jsonObject.put("descricaoTransformacao", "O histograma equalizado ...");
+
+                        int[] h = Filter.getHistogram(imageFile + lastUsed);
+                        try {
+                            jsonObject.put("histogramaEqualizado", Arrays.toString(h));
+                            jsonArray.put(jsonObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("Laplace")){
                         System.out.println("Laplace");
                         new Laplace().filter(params);
                         lastUsed += "_laplace_mask " + params.get(1)+"x"+params.get(2);
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Laplace");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Laplace ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("Logarítmica")){
                         System.out.println("Logarítmica");
                         params.set(1, object.getString("c"));
                         new Logarithmic().filter(params);
                         lastUsed += "_logarithmic";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Logarítmica");
+                        jsonObject.put("descricaoTransformacao", "A transformação Logarítmica ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("Potência")){
                         System.out.println("Potencia");
+                        params.set(1, object.getString("c"));
+                        params.set(2, object.getString("gama"));
                         new Potency().filter(params);
                         lastUsed += "_potency";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Potência");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Potência ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("Mediana")){
                         System.out.println("Mediana");
                         new Median().filter(params);
                         lastUsed += "_median";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Mediana");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Mediana ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("MIN")){
                         System.out.println("MIN");
                         new Min().filter(params);
                         lastUsed += "_min";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "MIN");
+                        jsonObject.put("descricaoTransformacao", "A transformação de MIN ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("MAX")){
                         System.out.println("MAX");
                         new Max().filter(params);
                         lastUsed += "_max";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "MAX");
+                        jsonObject.put("descricaoTransformacao", "A transformação de MAX ...");
+                        jsonArray.put(jsonObject);
                     }else if(nome.equals("Soma")){
                         System.out.println("Soma");
                         params.set(1, object.getString("imagem2"));
                         new SumImage().filter(params);
                         String[] aux = params.get(1).split("/");
                         String nomeAux = aux[aux.length - 1];
-                        lastUsed += "_sum " + nomeAux;
+                        lastUsed += "_sum" + nomeAux;
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Soma");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Soma ...");
+                        jsonArray.put(jsonObject);
                     }else if(nome.equals("Subtração")){
                         System.out.println("Subtração");
                         params.set(1, object.getString("imagem2"));
                         new SubtractImage().filter(params);
                         String[] aux = params.get(1).split("/");
                         String nomeAux = aux[aux.length - 1];
-                        lastUsed += "_subtract "+ nomeAux;
+                        lastUsed += "_subtract"+ nomeAux;
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Subtração");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Subtração ...");
+                        jsonArray.put(jsonObject);
+                    }else if(nome.equals("Tresholding")){
+                        System.out.println("Tresholding");
+                        params.set(1, object.getString("limiar"));
+                        params.set(2, object.getString("cor1"));
+                        params.set(3, object.getString("cor2"));
+                        new Tresholding().filter(params);
+                        lastUsed += "_tresholding";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Tresholding");
+                        jsonObject.put("descricaoTransformacao", "A transformação de Tresholding ...");
+                        jsonArray.put(jsonObject);
                     }
 
 
@@ -172,18 +303,6 @@ public class ImagemController {
             }
         }
 
-        JSONArray jsonArray = new JSONArray();
-
-        int[] h = Filter.getHistogram(imageFile);
-        JSONObject jsonHist = new JSONObject();
-        try {
-            jsonHist.put("histogramaDaImagemOriginal", Arrays.toString(h));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        jsonArray.put(jsonHist);
-
         File[] listOfFiles = folderImage.listFiles();
 
         if (folderImage.exists()) {
@@ -191,42 +310,24 @@ public class ImagemController {
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile()) {
                         String fileName = listOfFiles[i].getName();
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("id" , i);
-                        jsonObject.put("fileName", fileName);
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
-                        if(fileName.endsWith("negative")){
-                            jsonObject.put("nomeTransformacao", "Negativo Digital");
-                            jsonObject.put("descricaoTransformacao", "O negativo digital ...");
-                        }else if(fileName.endsWith("grayscale")){
+                        if(fileName.endsWith(nomeImagem + "_grayscale")){
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("id" , i);
+                            jsonObject.put("fileName", fileName);
+                            jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
                             jsonObject.put("nomeTransformacao", "Tons de Cinza");
                             jsonObject.put("descricaoTransformacao", "A imagem em tons de cinza ...");
-                        }else if(fileName.endsWith("histogram")){
-                            jsonObject.put("nomeTransformacao", "Equalização de Histrograma");
-                            jsonObject.put("descricaoTransformacao", "O histograma equalizado ...");
-                        }else if(fileName.endsWith("_laplace_mask " + params.get(1)+"x"+params.get(2))){
-                            jsonObject.put("nomeTransformacao", "Laplace");
-                            jsonObject.put("descricaoTransformacao", "A transformação de Laplace ...");
-                        }else if(fileName.endsWith("logarithmic")){
-                            jsonObject.put("nomeTransformacao", "Logarítmica");
-                            jsonObject.put("descricaoTransformacao", "A transformação Logarítmica ...");
-                        }else if(fileName.endsWith("potency")){
-                            jsonObject.put("nomeTransformacao", "Potência");
-                            jsonObject.put("descricaoTransformacao", "A transformação de Potência ...");
-                        }else if(fileName.endsWith("median")){
-                            jsonObject.put("nomeTransformacao", "Mediana");
-                            jsonObject.put("descricaoTransformacao", "A transformação de Mediana ...");
-                        }else if(fileName.endsWith("min")){
-                            jsonObject.put("nomeTransformacao", "MIN");
-                            jsonObject.put("descricaoTransformacao", "A transformação de MIN ...");
-                        }else if(fileName.endsWith("max")){
-                            jsonObject.put("nomeTransformacao", "MAX");
-                            jsonObject.put("descricaoTransformacao", "A transformação de MAX ...");
-                        }else {
+                            jsonArray.put(jsonObject);
+                        }
+                        else if(fileName.equals(nomeImagem)){
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("id" , i);
+                            jsonObject.put("fileName", fileName);
+                            jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
                             jsonObject.put("nomeTransformacao", "Imagem Original");
                             jsonObject.put("descricaoTransformacao", "A imagem original ...");
+                            jsonArray.put(jsonObject);
                         }
-                        jsonArray.put(jsonObject);
                     } else if (listOfFiles[i].isDirectory()) {
                         System.out.println("Directory " + listOfFiles[i].getName());
                     }
@@ -234,6 +335,15 @@ public class ImagemController {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        int[] h = Filter.getHistogram(imageFile);
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("histogramaImagemOriginal", Arrays.toString(h));
+            jsonArray.put(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         return ResponseEntity.ok(jsonArray.toString());

@@ -62,7 +62,7 @@
             <div class="col-sm-2">
                 <div ng-if="f.hasOwnProperty('cor1')">
                     Digite a Cor 1 {{f.cor1}}
-                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor1" />
+                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor1"/>
                 </div>
             </div>
             <div class="col-sm-2">
@@ -74,7 +74,7 @@
             <div class="col-sm-2">
                 <div ng-if="f.hasOwnProperty('cor2')">
                     Digite a Cor 2
-                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor2" />
+                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor2"/>
                 </div>
             </div>
             <div class="col-sm-2">
@@ -87,10 +87,12 @@
                 <div ng-if="f.hasOwnProperty('imagem2')">
                     <div class="input-group input-group-md">
                         <span class="input-group-addon">Arquivo</span>
-                        <input type="file" name="file" id="arquivo" class="form-control" placeholder="Selecione um arquivo"
-                               aria-describedby="arquivo" ng-model="arquivo" >
-                        <a ng-disabled="form.arquivo.$pristine" class="btn btn-primary" ng-click="uploadImagem($index)">Upload <span
-                                class="glyphicon glyphicon-chevron-right"></span></a>
+                        <input type="file" name="file" id="arquivo" class="form-control"
+                               placeholder="Selecione um arquivo"
+                               aria-describedby="arquivo" ng-model="arquivo">
+                        <a ng-disabled="form.arquivo.$pristine" class="btn btn-primary" ng-click="uploadImagem($index)">Upload
+                            <span
+                                    class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
                 </div>
             </div>
@@ -128,7 +130,21 @@
 
 </div>
 
-<canvas id="myChart" responsive="true" width="400" height="400"></canvas>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Comparação de Histogramas
+            <small>Imagem selecionada</small>
+            <div class="col-md-6">
+                <canvas id="myChart" responsive="true" width="400" height="400"></canvas>
+            </div>
+            <div class="col-md-6">
+                <div ng-show="compararHistogramas()">
+                    <canvas id="equalizacao" responsive="true" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </h1>
+    </div>
+</div>
 
 <!--
 &lt;!&ndash; Project One &ndash;&gt;

@@ -146,6 +146,20 @@ public class ImagemController {
                         System.out.println("MAX");
                         new Max().filter(params);
                         lastUsed += "_max";
+                    }else if(nome.equals("Soma")){
+                        System.out.println("Soma");
+                        params.set(1, object.getString("imagem2"));
+                        new SumImage().filter(params);
+                        String[] aux = params.get(1).split("/");
+                        String nomeAux = aux[aux.length - 1];
+                        lastUsed += "_sum " + nomeAux;
+                    }else if(nome.equals("Subtração")){
+                        System.out.println("Subtração");
+                        params.set(1, object.getString("imagem2"));
+                        new SubtractImage().filter(params);
+                        String[] aux = params.get(1).split("/");
+                        String nomeAux = aux[aux.length - 1];
+                        lastUsed += "_subtract "+ nomeAux;
                     }
 
 

@@ -1,4 +1,4 @@
-<div class="dropdown">
+<!--<div class="dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
         <span class="caret"></span></button>
     <ul class="dropdown-menu">
@@ -7,15 +7,14 @@
         <li><a href="#">JavaScript</a></li>
     </ul>
 
-    <a class="btn btn-primary" ng-click="teste()">Teste<span
-            class="glyphicon glyphicon-chevron-right"></span></a>
-</div>
+</div>-->
 
 <!-- Page Heading -->
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Page Heading
-            <small>Secondary Text</small>
+        <h1 class="page-header">Edição
+            <small>Imagem selecionada</small>
+            <img class="img-responsive" src="{{url}}" alt="Imagem selecionada" height="250" width="250">
         </h1>
     </div>
 </div>
@@ -24,26 +23,113 @@
 <ol>
     <!-- loop through and display existing ingredients -->
     <li data-ng-repeat="f in functionsSelected track by $index">
-        <ui-select ng-model="functionsSelected[$index]" theme="select2" ng-disabled="ctrl.disabled" style="min-width: 300px;" title="Choose a person"
-                   data-ng-change="changeFunction($index)">
-            <ui-select-match placeholder="Select a person in the list or search his name/age...">{{functionsSelected[$index].nome}}</ui-select-match>
-            <ui-select-choices repeat="func in functions ">
-                <div ng-bind-html="func.nome"></div>
-                <small>
-                    Função: {{func.nome}}
-                    <span ng-show="func.c">C : {{func.c}}</span>
-                    <!--age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>-->
-                </small>
-            </ui-select-choices>
-        </ui-select>
-        <!-- remove button -->
-        <a href=""  data-ng-show="f"
-           data-ng-click="functionsSelected.splice($index,1)">
-            [Remove]</a>
+        <div class="row">
+            <div class="col-sm-4">
+                <ui-select ng-model="functionsSelected[$index]" theme="select2" ng-disabled="ctrl.disabled"
+                           style="min-width: 300px;" title="Choose a person"
+                           data-ng-change="changeFunction($index)">
+                    <ui-select-match placeholder="Selecione uma função para aplicar à imagem selecionada ...">
+                        {{functionsSelected[$index].nome}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="func in functions ">
+                        <div ng-bind-html="func.nome"></div>
+                        <small>
+                            Função: {{func.nome}}
+                            <span ng-show="func.c">C : {{func.c}}</span>
+                            <!--age: <span ng-bind-html="''+person.age | highlight: $select.search"></span>-->
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="col-sm-2">
+                <div ng-show="f.hasOwnProperty('c')">
+                    Digite C
+                    <input class="form-control" type="number" ng-model="f.c">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('gama')">
+                    Digite Gama
+                    <input class="form-control" type="number" ng-model="f.gama">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('limiar')">
+                    Digite o Limiar
+                    <input class="form-control" type="number" ng-model="f.limiar">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('cor1')">
+                    Digite a Cor 1 {{f.cor1}}
+                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor1" />
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('intensidade1')">
+                    Digite a Intensidade da Cor 1
+                    <input class="form-control" type="number" ng-model="f.intensidade1">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('cor2')">
+                    Digite a Cor 2
+                    <input class="form-control" colorpicker="rgb" type="text" ng-model="f.cor2" />
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div ng-if="f.hasOwnProperty('intensidade2')">
+                    Digite a Intensidade da Cor 2
+                    <input class="form-control" type="number" ng-model="f.intensidade2">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div ng-if="f.hasOwnProperty('imagem2')">
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon">Arquivo</span>
+                        <input type="file" name="file" id="arquivo" class="form-control" placeholder="Selecione um arquivo"
+                               aria-describedby="arquivo" ng-model="arquivo" >
+                    </div>
+                </div>
+            </div>
+
+            <!-- remove button -->
+            <div class="col-sm-1">
+                <a href="" data-ng-show="f"
+                   data-ng-click="functionsSelected.splice($index,1)">
+                    [Remove]</a>
+            </div>
+        </div>
     </li>
+
+    <div>
+        <a class="btn btn-primary" ng-click="runTransformacoes()">Aplicar Transformações<span
+                class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
 </ol>
 
-<!-- Project One -->
+<div ng-repeat="i in imagens">
+    <div class="row">
+        <div class="col-md-7">
+            <a href="#">
+                <img class="img-responsive" src="{{i.url}}" alt="">
+            </a>
+        </div>
+        <div class="col-md-5">
+            <h3>{{i.nomeTransformacao}}</h3>
+            <h4>Subheading</h4>
+            <p>{{i.descricaoTransformacao}}</p>
+            <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+    </div>
+    </br>
+
+</div>
+
+<canvas id="myChart" responsive="true" width="400" height="400"></canvas>
+
+<!--
+&lt;!&ndash; Project One &ndash;&gt;
 <div class="row">
     <div class="col-md-7">
         <a href="#">
@@ -59,11 +145,11 @@
         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;
 
 <hr>
 
-<!-- Project Two -->
+&lt;!&ndash; Project Two &ndash;&gt;
 <div class="row">
     <div class="col-md-7">
         <a href="#">
@@ -79,11 +165,11 @@
         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;
 
 <hr>
 
-<!-- Project Three -->
+&lt;!&ndash; Project Three &ndash;&gt;
 <div class="row">
     <div class="col-md-7">
         <a href="#">
@@ -99,11 +185,11 @@
         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;
 
 <hr>
 
-<!-- Project Four -->
+&lt;!&ndash; Project Four &ndash;&gt;
 <div class="row">
 
     <div class="col-md-7">
@@ -120,11 +206,11 @@
         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 </div>
-<!-- /.row -->
+&lt;!&ndash; /.row &ndash;&gt;
 
 <hr>
 
-<!-- Project Five -->
+&lt;!&ndash; Project Five &ndash;&gt;
 <div class="row">
     <div class="col-md-7">
         <a href="#">
@@ -139,7 +225,7 @@
             facilis dolorum.</p>
         <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
-</div>
+</div>-->
 <!-- /.row -->
 
 <hr>

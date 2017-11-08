@@ -1,4 +1,4 @@
-angular.module('pid', ['ngRoute', 'ui.select', 'ngSanitize'])
+angular.module('pid', ['ngRoute', 'ui.select', 'ngSanitize', 'ui.bootstrap', 'dialogs', 'colorpicker.module'])
 
 // configure our routes
 .config(function($routeProvider) {

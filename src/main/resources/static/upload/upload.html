@@ -5,9 +5,6 @@
             <input type="file" name="file" id="arquivo" class="form-control" placeholder="Selecione um arquivo"
                    aria-describedby="arquivo" ng-model="arquivo" >
         </div>
-
-        Pristine{{form.file.$pristine}}
-        Dirty{{form.file.$dirty}}
         <a ng-disabled="form.arquivo.$pristine" class="btn btn-primary" ng-click="uploadImagem()">Upload <span
                 class="glyphicon glyphicon-chevron-right"></span></a>
     </div>

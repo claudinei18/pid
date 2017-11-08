@@ -3,6 +3,7 @@ package com.example;
 import com.example.pseimage.*;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ import java.util.Map;
 @Scope("prototype")
 @RequestMapping("/rest")
 public class ImagemController {
+    @Value("${ip}")
+    private String ip;
 
     @RequestMapping(value = "/imagem", method = RequestMethod.POST)
     public
@@ -118,7 +121,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Negativo Digital");
                         jsonObject.put("descricaoTransformacao", "O negativo digital ...");
 
@@ -134,7 +137,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Equalização de Histrograma");
                         jsonObject.put("descricaoTransformacao", "O histograma equalizado ...");
 
@@ -158,7 +161,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Laplace");
                         jsonObject.put("descricaoTransformacao", "A transformação de Laplace ...");
                         jsonArray.put(jsonObject);
@@ -174,7 +177,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Logarítmica");
                         jsonObject.put("descricaoTransformacao", "A transformação Logarítmica ...");
                         jsonArray.put(jsonObject);
@@ -191,7 +194,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Potência");
                         jsonObject.put("descricaoTransformacao", "A transformação de Potência ...");
                         jsonArray.put(jsonObject);
@@ -206,7 +209,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Mediana");
                         jsonObject.put("descricaoTransformacao", "A transformação de Mediana ...");
                         jsonArray.put(jsonObject);
@@ -221,7 +224,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "MIN");
                         jsonObject.put("descricaoTransformacao", "A transformação de MIN ...");
                         jsonArray.put(jsonObject);
@@ -236,7 +239,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "MAX");
                         jsonObject.put("descricaoTransformacao", "A transformação de MAX ...");
                         jsonArray.put(jsonObject);
@@ -253,7 +256,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Soma");
                         jsonObject.put("descricaoTransformacao", "A transformação de Soma ...");
                         jsonArray.put(jsonObject);
@@ -270,7 +273,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Subtração");
                         jsonObject.put("descricaoTransformacao", "A transformação de Subtração ...");
                         jsonArray.put(jsonObject);
@@ -287,7 +290,7 @@ public class ImagemController {
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
-                        jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Tresholding");
                         jsonObject.put("descricaoTransformacao", "A transformação de Tresholding ...");
                         jsonArray.put(jsonObject);
@@ -315,7 +318,7 @@ public class ImagemController {
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("id" , i);
                             jsonObject.put("fileName", fileName);
-                            jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
+                            jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
                             jsonObject.put("nomeTransformacao", "Tons de Cinza");
                             jsonObject.put("descricaoTransformacao", "A imagem em tons de cinza ...");
                             jsonArray.put(jsonObject);
@@ -324,7 +327,7 @@ public class ImagemController {
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("id" , i);
                             jsonObject.put("fileName", fileName);
-                            jsonObject.put("url" , "http://localhost:5000/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
+                            jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
                             jsonObject.put("nomeTransformacao", "Imagem Original");
                             jsonObject.put("descricaoTransformacao", "A imagem original ...");
                             jsonArray.put(jsonObject);

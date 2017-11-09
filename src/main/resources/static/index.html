@@ -9,13 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>1 Col Portfolio - Start Bootstrap Template</title>
+    <title>PSE Image</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/1-col-portfolio.css" rel="stylesheet">
 
 
     <link href="dependencias/select.css" rel="stylesheet">
@@ -82,10 +79,13 @@
     <script src="index.js"></script>
     <script src="upload/upload.js"></script>
     <script src="selectFunctions/selectFunctions.js"></script>
+    
+    <!-- Custom CSS -->
+    <link href="css/1-col-portfolio.css" rel="stylesheet">
 
 </head>
 
-<body ng-app="pid">
+<body ng-app="pid" ng-controller="appCtrl">
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -105,13 +105,13 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#">About</a>
+                    <a ng-click="scrollTo('Funcoes')">Funcoes</a>
                 </li>
                 <li>
-                    <a href="#">Services</a>
+                    <a ng-click="scrollTo('Resultado')">Resultado</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a ng-click="scrollTo('Histograma')">Histograma</a>
                 </li>
             </ul>
         </div>

@@ -298,9 +298,9 @@ public class ImagemController {
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Gaussiano")){
                         System.out.println("Gaussiano");
-                        params.set(1, object.getString("c"));
+                        params.set(1, object.getString("gauss"));
                         new Gaussian().filter(params);
-                        int tam = Integer.parseInt(object.getString("c"));
+                        int tam = Integer.parseInt(object.getString("gauss"));
                         tam++;
                         lastUsed += "_gauss_mask " + tam+ "x" + tam;
 

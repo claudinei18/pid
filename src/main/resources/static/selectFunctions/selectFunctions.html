@@ -20,7 +20,7 @@
 </div>
 <!-- /.row -->
 
-<ol>
+<ol id="Funcoes">
     <!-- loop through and display existing ingredients -->
     <li data-ng-repeat="f in functionsSelected | orderBy: 'nome' track by $index">
         <div class="row">
@@ -52,6 +52,7 @@
                     <strong>C = 7 </strong>{1, 7, 21, 35, 35, 21, 7, 1};</br>
                     <strong>C = 8 </strong>{1, 8, 28, 56, 70, 56, 28, 8, 1};</br>
                 </div>
+		<select class="selectpicker" ng-model="f.gauss" ng-options="x for x in gaussOptions"></select>
             </div>
             <div class="col-sm-2">
                 <div ng-show="f.hasOwnProperty('c')">
@@ -124,7 +125,7 @@
     </div>
 </ol>
 
-<div ng-repeat="i in imagens">
+<div ng-repeat="i in imagens" id="Resultado">
     <div class="row" ng-show="i.hasOwnProperty('fileName')">
         <div class="col-md-7">
                 <img class="img-responsive myBorderImage" src="{{i.url}}" alt="" >
@@ -141,7 +142,7 @@
 
 </div>
 
-<div class="row" ng-show="compararHistogramas()">
+<div class="row" ng-show="compararHistogramas()" id="Histograma">
     <div class="col-lg-12">
         <h1 class="page-header">Comparação de Histogramas
             <small>Imagem selecionada</small>

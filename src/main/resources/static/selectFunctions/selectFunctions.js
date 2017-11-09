@@ -7,6 +7,7 @@ angular.module('pid')
 
         $scope.functionsSelected = [];
         $scope.functionsSelected.push('');
+	$scope.gaussOptions = ["2", "4", "6", "8"];
 
 
         /*ate agora:
@@ -59,7 +60,7 @@ angular.module('pid')
             {nome: "Tresholding", limiar: 1, cor1: 1, cor2: 1},
             {nome: "Soma", imagem2: ""},
             {nome: "Subtração", imagem2: ""},
-            {nome: "Gaussiano", c: 1},
+            {nome: "Gaussiano", gauss: 2},
             {nome: "Máscara Genérica", dimensoesDaMascara: "", tag: "", valoresDaMascara: ""}
 
         ];

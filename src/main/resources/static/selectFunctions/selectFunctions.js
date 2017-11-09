@@ -1,13 +1,13 @@
 angular.module('pid')
     .controller('MainCtrl', function ($scope, $rootScope, $http, $dialogs, $timeout) {
 
-        $scope.url = "http://186.248.79.46:9203/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
+        $scope.url = "http://localhost:5000/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
 
         $scope.imagens = [];
 
         $scope.functionsSelected = [];
         $scope.functionsSelected.push('');
-	$scope.gaussOptions = ["2", "4", "6", "8"];
+    	$scope.gaussOptions = ["2", "4", "6", "8"];
 
 
         /*ate agora:

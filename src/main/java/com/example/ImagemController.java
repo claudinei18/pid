@@ -85,10 +85,25 @@ public class ImagemController {
         String imageFile = root + codeImagemOriginal + "/" + nomeImagem;
         System.out.println(map.toString());
 
+        File folderImage = new File(root + codeImagemOriginal);
+
+        File[] listOfFiles = folderImage.listFiles();
+
+        if (folderImage.exists()) {
+            try {
+                for (int i = 0; i < listOfFiles.length; i++) {
+                    if (listOfFiles[i].isFile() && !listOfFiles[i].getName().equals(nomeImagem)) {
+                        listOfFiles[i].delete();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
 
         JSONArray jsonArray3 = new JSONArray((ArrayList)map.get("funcoes"));
         System.out.println(jsonArray3.length());
-        File folderImage = new File(root + codeImagemOriginal);
 
         String lastUsed = "";
         System.out.println("Array " + jsonArray3);
@@ -325,7 +340,7 @@ public class ImagemController {
             }
         }
 
-        File[] listOfFiles = folderImage.listFiles();
+        listOfFiles = folderImage.listFiles();
 
         if (folderImage.exists()) {
             try {

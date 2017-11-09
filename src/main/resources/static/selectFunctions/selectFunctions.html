@@ -14,7 +14,7 @@
     <div class="col-lg-12">
         <h1 class="page-header">Edição
             <small>Imagem selecionada</small>
-            <img class="img-responsive" src="{{url}}" alt="Imagem selecionada" height="250" width="250">
+            <img class="img-responsive myBorderImage" src="{{url}}" alt="Imagem selecionada" height="250" width="250">
         </h1>
     </div>
 </div>
@@ -22,7 +22,7 @@
 
 <ol>
     <!-- loop through and display existing ingredients -->
-    <li data-ng-repeat="f in functionsSelected track by $index">
+    <li data-ng-repeat="f in functionsSelected | orderBy: 'nome' track by $index">
         <div class="row">
             <div class="col-sm-4">
                 <ui-select ng-model="functionsSelected[$index]" theme="select2" ng-disabled="ctrl.disabled"
@@ -31,7 +31,7 @@
                     <ui-select-match placeholder="Selecione uma função para aplicar à imagem selecionada ...">
                         {{functionsSelected[$index].nome}}
                     </ui-select-match>
-                    <ui-select-choices repeat="func in functions ">
+                    <ui-select-choices repeat="func in functions | orderBy: 'nome'">
                         <div ng-bind-html="func.nome"></div>
                         <small>
                             Função: {{func.nome}}
@@ -113,17 +113,17 @@
 </ol>
 
 <div ng-repeat="i in imagens">
-    <div class="row">
+    <div class="row" ng-show="i.hasOwnProperty('fileName')">
         <div class="col-md-7">
             <a href="#">
-                <img class="img-responsive" src="{{i.url}}" alt="">
+                <img class="img-responsive myBorderImage" src="{{i.url}}" alt="" >
             </a>
         </div>
         <div class="col-md-5">
             <h3>{{i.nomeTransformacao}}</h3>
             <h4>Subheading</h4>
             <p>{{i.descricaoTransformacao}}</p>
-            <a class="btn btn-primary" href="#">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="btn btn-primary" ng-click="openModal(i)">View Project <span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
     </div>
     </br>
@@ -289,3 +289,52 @@
     </div>
     <!-- /.row -->
 </footer>
+
+<!-- modal -->
+<div id="myModal"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- dialog -->
+    <div class="modal-dialog">
+
+        <!-- content -->
+        <div class="modal-content">
+
+            <!-- header -->
+            <div class="modal-header">
+                <h1 id="myModalLabel"
+                    class="modal-title">
+                    {{imagemClicada.nomeTransformacao}}
+                </h1>
+            </div>
+            <!-- header -->
+
+            <!-- body -->
+            <div class="modal-body">
+                <h5>{{imagemClicada.descricaoTransformacao}}</h5>
+                <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}" alt="">
+
+            </div>
+            <!-- body -->
+
+            <!-- footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+            <!-- footer -->
+
+        </div>
+        <!-- content -->
+
+    </div>
+    <!-- dialog -->
+
+</div>
+<!-- modal -->

@@ -245,11 +245,12 @@ public class ImagemController {
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Soma")){
                         System.out.println("Soma");
-                        params.set(1, object.getString("imagem2"));
+                        params.set(0, object.getString("imagem2"));
+                        params.set(1, imageFile+lastUsed);
                         new SumImage().filter(params);
-                        String[] aux = params.get(1).split("/");
+                        String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
-                        lastUsed += "_sum" + nomeAux;
+                        lastUsed += "_sum " + nomeAux;
 
                         File file = new File(imageFile+lastUsed);
 
@@ -262,11 +263,12 @@ public class ImagemController {
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Subtração")){
                         System.out.println("Subtração");
-                        params.set(1, object.getString("imagem2"));
+                        params.set(0, object.getString("imagem2"));
+                        params.set(1, imageFile+lastUsed);
                         new SubtractImage().filter(params);
-                        String[] aux = params.get(1).split("/");
+                        String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
-                        lastUsed += "_subtract"+ nomeAux;
+                        lastUsed += "_subtract "+ nomeAux;
 
                         File file = new File(imageFile+lastUsed);
 
@@ -294,6 +296,23 @@ public class ImagemController {
                         jsonObject.put("nomeTransformacao", "Tresholding");
                         jsonObject.put("descricaoTransformacao", "A transformação de Tresholding ...");
                         jsonArray.put(jsonObject);
+                    }else if(nome.equals("Gaussiano")){
+                        System.out.println("Gaussiano");
+                        params.set(1, object.getString("c"));
+                        new Gaussian().filter(params);
+                        int tam = Integer.parseInt(object.getString("c"));
+                        tam++;
+                        lastUsed += "_gauss_mask " + tam+ "x" + tam;
+
+                        File file = new File(imageFile+lastUsed);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("nomeTransformacao", "Gaussiano");
+                        jsonObject.put("descricaoTransformacao", "A transformação Gaussiana ...");
+                        jsonArray.put(jsonObject);
                     }
 
 
@@ -313,7 +332,7 @@ public class ImagemController {
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile()) {
                         String fileName = listOfFiles[i].getName();
-                        if(fileName.endsWith(nomeImagem + "_grayscale")){
+                        if(fileName.equals(nomeImagem + "_grayscale")){
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("id" , i);
                             jsonObject.put("fileName", fileName);

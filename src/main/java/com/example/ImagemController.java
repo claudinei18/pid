@@ -105,7 +105,7 @@ public class ImagemController {
                     JSONObject object = (JSONObject) o;
                     System.out.println("Object " + object);
                     String nome = object.getString("nome");
-                    String[] args2 = {imageFile+lastUsed, "3", "3", "box", "1", "1", "1", "1", "1", "1", "1", "1", "1"};
+                    String[] args2 = {imageFile+lastUsed, "3", "3", "lowpass", "1", "1", "1", "1", "1", "1", "1", "1", "1"};
                     params = new ArrayList<>();
                     for(int j=0; j<args2.length; j++){
                         params.add(args2[j]);

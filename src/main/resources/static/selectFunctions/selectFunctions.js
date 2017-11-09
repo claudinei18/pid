@@ -1,7 +1,7 @@
 angular.module('pid')
     .controller('MainCtrl', function ($scope, $rootScope, $http, $dialogs, $timeout) {
 
-        $scope.url = "http://172.17.0.39:9203/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
+        $scope.url = "http://186.248.79.46:9203/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
 
         $scope.imagens = [];
 

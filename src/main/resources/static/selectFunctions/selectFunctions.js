@@ -79,9 +79,9 @@ angular.module('pid')
 
 
         $scope.runFuntions = function (body) {
-           waitingDialog.show('Running ... Please wait');
+            waitingDialog.show('Running ... Please wait');
             $http.post('/rest/funcoes', body).then(function (response) {
-               if (response.data) {
+                if (response.data) {
                     $scope.msg = "Post Data Submitted Successfully!";
                     console.log(response);
                     console.log(response.data)

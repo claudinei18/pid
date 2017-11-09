@@ -2,11 +2,8 @@ angular.module('pid')
 
     .controller('ImagemCtrl', function ($scope, $rootScope, $http, $location) {
 
-
-
-
-
         $scope.uploadImagem = function () {
+            waitingDialog.show('Uploading');
             $scope.desativado = true;
             console.log("Uploading")
 
@@ -34,7 +31,8 @@ angular.module('pid')
                 var path = response.data.path;
                 $rootScope.path = path;
                 $rootScope.nomeImagem = response.data.nomeImagem;
-                alert('You\'re about to go back to page 1...');
+                waitingDialog.hide();
+                alert('Upload completed!');
                 $location.path('/selectFunctions');
             });
         };

@@ -79,8 +79,9 @@ angular.module('pid')
 
 
         $scope.runFuntions = function (body) {
-            $http.post('/rest/funcoes', body).then(function (response) {
-                if (response.data) {
+           waitingDialog.show('Running ... Please wait');
+            $http.post('http://localhost:5000/rest/funcoes', body).then(function (response) {
+               if (response.data) {
                     $scope.msg = "Post Data Submitted Successfully!";
                     console.log(response);
                     console.log(response.data)
@@ -99,8 +100,11 @@ angular.module('pid')
                     }
 
                 }
+                waitingDialog.hide();
             }, function (response) {
+                waitingDialog.hide();
                 $scope.msg = "Service not Exists";
+                alert($scope.msg);
                 $scope.statusval = response.status;
                 $scope.statustext = response.statusText;
                 $scope.headers = response.headers();
@@ -200,6 +204,7 @@ angular.module('pid')
 
 
         $scope.uploadImagem = function (i) {
+            waitingDialog.show('Uploading...');
             $scope.desativado = true;
             console.log("Uploading")
 
@@ -228,8 +233,10 @@ angular.module('pid')
                 $rootScope.nomeImagemSomada = response.data.nomeImagem;
 
                 $scope.functionsSelected[i].imagem2 = $rootScope.pathImagemSomada;
+                waitingDialog.hide();
 
             });
+            waitingDialog.hide();
         };
 
         $scope.compararHistogramas = function () {
@@ -240,6 +247,11 @@ angular.module('pid')
                 }
             }
             return false
+
+        }
+        $scope.openModal = function (imagem) {
+            $scope.imagemClicada = imagem;
+            $("#myModal").modal();
 
         }
     })

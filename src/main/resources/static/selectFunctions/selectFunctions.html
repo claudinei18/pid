@@ -186,14 +186,18 @@
         Imagem em tons de cinza
         <img class="img-responsive myBorderImage" src="{{urlImagemOriginalTonsDeCinza}}"
              alt="Imagem selecionada" height="250" width="250">
-        <canvas id="myChart" responsive="true" width="400" height="400"></canvas>
     </div>
     <div class="col-md-6">
         <div ng-if="showHistogramaEqualizado">
             <img class="img-responsive myBorderImage" src="{{urlImagemHistograma}}" alt="Imagem selecionada"
                  height="250" width="250">
-            <canvas id="equalizacao" responsive="true" width="400" height="400"></canvas>
         </div>
+    </div>
+    <div class="col-md-6">
+        <canvas id="myChart" responsive="true" width="400" height="400"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="equalizacao" responsive="true" width="400" height="400"></canvas>
     </div>
     <!--</div>-->
 </div>

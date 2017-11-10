@@ -175,24 +175,26 @@
 
 <div class="row" ng-show="compararHistogramas()" id="Histograma">
     <!--<div class="col-lg-12">-->
-        <h1 class="page-header">Comparação de Histogramas
-        </h1>
-            <div class="col-md-6">
-                Imagem Original
-                <img class="img-responsive myBorderImage" src="{{url}}" alt="Imagem selecionada" height="250"
-                     width="250">
-                Imagem em tons de cinza
-                <img class="img-responsive myBorderImage" src="{{urlImagemOriginalTonsDeCinza}}"
-                     alt="Imagem selecionada" height="250" width="250">
-                <canvas id="myChart" responsive="true" width="400" height="400"></canvas>
-            </div>
-            <div class="col-md-6">
-                <div ng-if="showHistogramaEqualizado">
-                    <img class="img-responsive myBorderImage" src="{{urlImagemHistograma}}" alt="Imagem selecionada"
-                         height="250" width="250">
-                    <canvas id="equalizacao" responsive="true" width="400" height="400"></canvas>
-                </div>
-            </div>
+    <h1 class="page-header">Comparação de Histogramas
+    </h1>
+    <div class="col-md-3">
+        Imagem Original
+        <img class="img-responsive myBorderImage" src="{{url}}" alt="Imagem selecionada" height="250"
+             width="250">
+    </div>
+    <div class="col-md-3">
+        Imagem em tons de cinza
+        <img class="img-responsive myBorderImage" src="{{urlImagemOriginalTonsDeCinza}}"
+             alt="Imagem selecionada" height="250" width="250">
+        <canvas id="myChart" responsive="true" width="400" height="400"></canvas>
+    </div>
+    <div class="col-md-6">
+        <div ng-if="showHistogramaEqualizado">
+            <img class="img-responsive myBorderImage" src="{{urlImagemHistograma}}" alt="Imagem selecionada"
+                 height="250" width="250">
+            <canvas id="equalizacao" responsive="true" width="400" height="400"></canvas>
+        </div>
+    </div>
     <!--</div>-->
 </div>
 

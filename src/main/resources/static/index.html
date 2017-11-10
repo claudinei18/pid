@@ -85,7 +85,7 @@
 
 </head>
 
-<body ng-app="pid" ng-controller="appCtrl">
+<body ng-app="pid" ng-controller="appCtrl" ng-init="openAlertModal()">
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -122,6 +122,7 @@
 
 <!-- Page Content -->
 <div class="container">
+
     <div ng-view>
 
     </div>
@@ -133,6 +134,57 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="js/bootstrap.min.js"></script>
+
+<!-- modal -->
+<div id="myModal2"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true"
+     style="margin-top: 30px">
+
+    <!-- dialog -->
+    <div class="modal-dialog">
+
+        <!-- content -->
+        <div class="modal-content">
+
+            <!-- header -->
+            <div class="modal-header">
+                <h1 id="myModalLabel"
+                    class="modal-title">
+                    Informação
+                </h1>
+            </div>
+            <!-- header -->
+
+            <!-- body -->
+            <div class="modal-body">
+                <h5>{{imagemClicada.descricaoTransformacao}}</h5>
+                Todas as transformações convertem a imagem de entrada para uma imagem acromática (em tons de cinza).
+                Por isso não se preocupe, realize o upload de imagens coloridas que nós convertemos para tons de cinza!
+
+            </div>
+            <!-- body -->
+
+            <!-- footer -->
+            <div class="modal-footer">
+                <button class="btn btn-primary"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+            <!-- footer -->
+
+        </div>
+        <!-- content -->
+
+    </div>
+    <!-- dialog -->
+
+</div>
+<!-- modal -->
 
 </body>
 

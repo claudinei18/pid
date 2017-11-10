@@ -24,5 +24,8 @@ angular.module('pid', ['ngRoute', 'ui.select', 'ngSanitize', 'ui.bootstrap', 'di
       $location.hash(id);
       $anchorScroll();
    }
+   $scope.openAlertModal = function () {
+       $('#myModal2').modal();
+   }
 });
 

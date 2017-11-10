@@ -89,10 +89,27 @@ public class ImagemController {
 
         File[] listOfFiles = folderImage.listFiles();
 
+        JSONArray jsonArray3 = new JSONArray((ArrayList)map.get("funcoes"));
         if (folderImage.exists()) {
+            String imagem2 = "";
+            for (int i = 0; i < jsonArray3.length(); i++) {
+                try {
+                    Object o = jsonArray3.get(i);
+                    if (!o.equals("")) {
+                        JSONObject object = (JSONObject) o;
+                        if(object.getString("imagem2") != null){
+                            imagem2 = object.getString("imagem2");
+                            System.out.println("imagem2" + imagem2);
+                            break;
+                        }
+                    }
+                } catch (JSONException e) {
+                }
+            }
             try {
                 for (int i = 0; i < listOfFiles.length; i++) {
-                    if (listOfFiles[i].isFile() && !listOfFiles[i].getName().equals(nomeImagem)) {
+                    if (listOfFiles[i].isFile() && !listOfFiles[i].getName().equals(nomeImagem)
+                            && !listOfFiles[i].getAbsolutePath().equals(imagem2)) {
                         listOfFiles[i].delete();
                     }
                 }
@@ -102,7 +119,7 @@ public class ImagemController {
         }
 
 
-        JSONArray jsonArray3 = new JSONArray((ArrayList)map.get("funcoes"));
+
         System.out.println(jsonArray3.length());
 
         String lastUsed = "";
@@ -260,36 +277,50 @@ public class ImagemController {
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Soma")){
                         System.out.println("Soma");
+                        String image1 = object.getString("imagem2");
+                        String image2 = imageFile+lastUsed;
                         params.set(0, object.getString("imagem2"));
                         params.set(1, imageFile+lastUsed);
+                        System.out.println(params);
                         new SumImage().filter(params);
                         String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
                         lastUsed += "_sum " + nomeAux;
 
                         File file = new File(imageFile+lastUsed);
+                        File fileimage1 = new File(image1);
+                        File fileimage2 = new File(image2);
 
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
+                        jsonObject.put("urlImagem1" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage1.getName());
+                        jsonObject.put("urlImagem2" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage2.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Soma");
                         jsonObject.put("descricaoTransformacao", "A transformação de Soma ...");
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Subtração")){
                         System.out.println("Subtração");
+                        String image1 = object.getString("imagem2");
+                        String image2 = imageFile+lastUsed;
                         params.set(0, object.getString("imagem2"));
                         params.set(1, imageFile+lastUsed);
+                        System.out.println(params);
                         new SubtractImage().filter(params);
                         String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
                         lastUsed += "_subtract "+ nomeAux;
 
                         File file = new File(imageFile+lastUsed);
+                        File fileimage1 = new File(image1);
+                        File fileimage2 = new File(image2);
 
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
+                        jsonObject.put("urlImagem1" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage1.getName());
+                        jsonObject.put("urlImagem2" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage2.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Subtração");
                         jsonObject.put("descricaoTransformacao", "A transformação de Subtração ...");

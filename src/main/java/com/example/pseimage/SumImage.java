@@ -16,7 +16,7 @@ public class SumImage extends Filter implements Filterable {
 
     @Override
     public String filter(List<String> params) {
-        
+
         BufferedImage img1 = this.openImage(params.get(0));
         BufferedImage img2 = this.openImage(params.get(1));
         String[] aux = params.get(0).split("/");

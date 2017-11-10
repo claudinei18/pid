@@ -3,11 +3,14 @@ angular.module('pid')
 
         $scope.url = "http://localhost:5000/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
 
+        $scope.showHistograma = false;
+        $scope.showHistogramaEqualizado = true;
+
         $scope.imagens = [];
 
         $scope.functionsSelected = [];
         $scope.functionsSelected.push('');
-    	$scope.gaussOptions = ["2", "4", "6", "8"];
+        $scope.gaussOptions = ["2", "4", "6", "8"];
 
 
         /*ate agora:
@@ -90,13 +93,25 @@ angular.module('pid')
                     $scope.histogramaImagemOriginal = JSON.parse(response.data[response.data.length - 1].histogramaImagemOriginal);
                     console.log($scope.imagens);
 
+                    $scope.showHistograma = true;
                     $scope.desenharGrafico();
-                    for(var j = 0; j < $scope.imagens.length; j++){
+                    for (var j = 0; j < $scope.imagens.length; j++) {
                         console.log($scope.imagens[j].nomeTransformacao)
                         var nome = $scope.imagens[j].nomeTransformacao
-                        if(nome == 'Equalização de Histrograma'){
+                        if (nome == 'Equalização de Histrograma') {
                             console.log("Desenhando")
+                            console.log($scope.imagens[j])
+                            $scope.urlImagemHistograma = $scope.imagens[j].url;
+                            $scope.showHistogramaEqualizado = true;
+                            $scope.urlImagemOriginalTonsDeCinza = $scope.url + "_grayscale";
                             $scope.desenharGraficoOutroHistograma(JSON.parse($scope.imagens[j].histogramaEqualizado));
+                        }else if(nome == 'Soma' || nome == 'Subtração'){
+                            console.log($scope.imagens[j])
+                            $scope.urlImagem1 = $scope.imagens[j].urlImagem1;
+                            $scope.urlImagem2 = $scope.imagens[j].urlImagem2;
+                            $scope.urlImagemResultante = $scope.imagens[j].url;
+                            $scope.funcao = nome;
+                            $scope.soma = true;
                         }
                     }
 
@@ -126,29 +141,29 @@ angular.module('pid')
             for (var i = 0; i < 256; i++) {
                 labels[i] = "" + i;
             }
-	    var backgroundColor = [];
-	    for (var i = 0; i < 256; i++) {
-	        backgroundColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 0.2)'
-    	    }
-	    var borderColor = [];
-	    for (var i = 0; i < 256; i++) {
-        	borderColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 1)'
-	    }
-	    console.log(backgroundColor)
-	    console.log(borderColor)
+            var backgroundColor = [];
+            for (var i = 0; i < 256; i++) {
+                backgroundColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 0.2)'
+            }
+            var borderColor = [];
+            for (var i = 0; i < 256; i++) {
+                borderColor[i] = 'rgba(' + i + ',' + i + ',' + i + ', 1)'
+            }
+            console.log(backgroundColor)
+            console.log(borderColor)
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
-		    backgroundColor: [
-	                'rgba(255, 99, 132, 0.2)',
-        	        'rgba(54, 162, 235, 0.2)',
-                	'rgba(255, 206, 86, 0.2)',
-	                'rgba(75, 192, 192, 0.2)',
-        	        'rgba(153, 102, 255, 0.2)',
-                	'rgba(255, 159, 64, 0.2)'
-	            ],
-		    borderColor: borderColor,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: borderColor,
                     datasets: [{
                         label: '# of Pixels',
                         data: $scope.histogramaImagemOriginal,
@@ -166,12 +181,11 @@ angular.module('pid')
                 }
             });
 
-	    //for (var i = 0; i < 256; i++) {
+            //for (var i = 0; i < 256; i++) {
             //    myChart.data.datasets[i].fillColor = 'rgba(' + i + ',' + i + ',' + i + ', 0.2)';
             //}
-   
 
-	    
+
         }
 
         $scope.desenharGraficoOutroHistograma = function (hist) {
@@ -241,15 +255,16 @@ angular.module('pid')
         };
 
         $scope.compararHistogramas = function () {
-            for(var i = 0; i < $scope.functionsSelected.length; i++){
-                if($scope.functionsSelected[i].hasOwnProperty('nome') &&
-                    $scope.functionsSelected[i].nome == 'Equalização de Histograma'){
+            for (var i = 0; i < $scope.functionsSelected.length; i++) {
+                if ($scope.functionsSelected[i].hasOwnProperty('nome') &&
+                    $scope.functionsSelected[i].nome == 'Equalização de Histograma') {
                     return true;
                 }
             }
             return false
 
         }
+
         $scope.openModal = function (imagem) {
             $scope.imagemClicada = imagem;
             $("#myModal").modal();

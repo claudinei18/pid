@@ -1,7 +1,7 @@
 angular.module('pid')
     .controller('MainCtrl', function ($scope, $rootScope, $http, $dialogs, $timeout) {
 
-        $scope.url = "http://localhost:5000/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
+        $scope.url = "http://186.248.79.46:9203/imagens/" + $rootScope.codigoImagem + "/" + $rootScope.nomeImagem;
 
         $scope.showHistograma = false;
         $scope.showHistogramaEqualizado = true;

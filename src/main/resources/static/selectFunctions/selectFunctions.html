@@ -150,7 +150,7 @@
                 <p>{{i.psnr}}</p>
             </div>
             <div ng-show="i.hasOwnProperty('urlHistograma')">
-                <img class="img-responsive myBorderImage" ng-src="{{i.urlHistograma}}" alt="">
+                <img class="img-responsive myBorderImage" ng-src="{{i.urlHistograma}}?cb={{random()}}" alt="">
             </div>
             <a class="btn btn-primary" ng-click="openModal(i)">View Project <span
                     class="glyphicon glyphicon-chevron-right"></span></a>
@@ -413,19 +413,19 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}" alt="" height="500"
+                        <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}?cb={{random()}}" alt="" height="500"
                              width="500">
                     </div>
                     <div class="row">
                         <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlHistograma')">
                             <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlHistograma}}" alt=""
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlHistograma}}?cb={{random()}}" alt=""
                                      height="500" width="500">
                             </div>
                         </div>
                         <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdp')">
                             <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdp}}" alt=""
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdp}}?cb={{random()}}" alt=""
                                      height="500" width="500">
                             </div>
                         </div>

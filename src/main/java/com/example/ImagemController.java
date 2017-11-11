@@ -369,8 +369,6 @@ public class ImagemController {
                     }else if(nome.equals("Tresholding")){
                         System.out.println("Tresholding");
                         params.set(1, object.getString("limiar"));
-                        params.set(2, object.getString("cor1"));
-                        params.set(3, object.getString("cor2"));
                         new Tresholding().filter(params);
                         lastUsed += "_tresholding";
 

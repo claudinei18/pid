@@ -463,8 +463,8 @@ public class ImagemController {
                         jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
                         jsonObject.put("mse" , mse);
                         jsonObject.put("psnr" , psnr);
-                        jsonObject.put("nomeTransformacao", "Negativo Digital");
-                        jsonObject.put("descricaoTransformacao", "O negativo digital ...");
+                        jsonObject.put("nomeTransformacao", "Máscara Genérica");
+                        jsonObject.put("descricaoTransformacao", "A Máscara Genérica...");
                         jsonArray.put(jsonObject);
                     }
 

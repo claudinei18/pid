@@ -11,6 +11,19 @@ body {
 footer {
     margin: 50px 0;
 }
+
+.modal-dialog-imagem {
+    width: 60%;
+    height: 60%;
+
+}
+
+.modal-content-imagem {
+    height: auto;
+    min-height: 60%;
+    border-radius: 0;
+}
+
 .myBorderImage { border-width: 1px; border-color: black; border-style: solid; }
 
         .jumbotron {

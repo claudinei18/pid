@@ -7,10 +7,18 @@ package com.example.pseimage;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * @author Herbert
@@ -83,24 +91,187 @@ public class Filter {
     public void setFilteredImageName(String type) {
         filteredImage = file + "_" + type;
     }
-
-    public static int[] getHistogram(String file) {
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static int[] getHistogram(String file) throws IOException{
 
         BufferedImage img = new Filter().openImage(file);
         int[] histogram = new int[256];
 
-        for (int k = 0; k < 256; k++) {
+        for(int k=0; k<256; k++){
             histogram[k] = 0;
         }
 
-        for (int i = 0; i < img.getWidth(); i++) {
-            for (int j = 0; j < img.getHeight(); j++) {
+        for(int i=0; i<img.getWidth(); i++){
+            for(int j=0; j<img.getHeight(); j++){
                 int rgb = img.getRGB(i, j);
                 Pixel p = new Pixel(rgb);
                 histogram[p.gray]++;
             }
         }
         return histogram;
+    }
+
+    /**
+     * Creates an image file with the graph of a histogram
+     * @param histogram the histogram to be ploted
+     * @param file a name to indentify the image file in the disk
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static void plotHistogram(int[] histogram, String file) throws FileNotFoundException, IOException {
+
+        // cria o conjunto de dados
+        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+
+        for(int i=0; i<histogram.length; i++){
+            ds.addValue(histogram[i], file, ""+i);
+        }
+
+        // cria o gráfico
+        JFreeChart grafico = ChartFactory.createBarChart("Histograma", "Intensidade",
+                "Quantidade", ds, PlotOrientation.VERTICAL, false, false, false);
+
+        OutputStream fos = new FileOutputStream(file + "_histogram");
+        ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
+        fos.close();
+    }
+
+    /**
+     * Creates an image file with the graph of the Probability Density Function
+     * @param h the histogram from wich will be calculated the probabilities
+     * @param file a name to indentify the file in the disk
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static void plotFDP(int[] h, String file) throws FileNotFoundException, IOException{
+
+        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+        int numPixels = 0;
+        double density = 0.0;
+
+        for(int i=0; i<h.length; i++){
+            numPixels += h[i];
+        }
+
+        for(int i=0; i<h.length; i++){
+            density = (double)h[i] / numPixels;
+            ds.addValue(density, file, ""+i);
+        }
+
+        // cria o gráfico
+        JFreeChart grafico = ChartFactory.createLineChart("FDP", "Intensidade",
+                "Probabilidade", ds, PlotOrientation.VERTICAL, false, false, false);
+
+        OutputStream fos = new FileOutputStream(file + "_fdp");
+        ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
+        fos.close();
+    }
+
+    /**
+     * Calculates the Mean Squared Error between two images
+     * @param file1 the path of image 1
+     * @param file2 the path of image 2
+     * @return the Mean Squared Error (MSE)
+     * @throws IOException
+     */
+    public static double MSE(String file1, String file2) throws IOException{
+
+        BufferedImage img1 = new Filter().openImage(file1);
+        BufferedImage img2 = new Filter().openImage(file2);
+
+        int numPixels1 = img1.getWidth()*img1.getHeight();
+        int numPixels2 = img2.getWidth()*img2.getHeight();
+
+        double mse = 0.0;
+
+        if (numPixels1 != numPixels2){
+            System.out.println("As imagens têm tamanhos diferentes!");
+            return -1.0;
+        } else {
+
+            for(int i=0; i<img1.getWidth(); i++){
+                for(int j=0; j<img1.getHeight(); j++){
+                    int rgb1 = img1.getRGB(i, j);
+                    Pixel p1 = new Pixel(rgb1);
+
+                    int rgb2 = img2.getRGB(i, j);
+                    Pixel p2 = new Pixel(rgb2);
+
+                    mse += Math.pow((double)(Math.abs(p1.gray - p2.gray)), 2.0);
+                }
+            }
+            mse = mse / (double)numPixels1;
+            return mse;
+        }
+    }
+
+    /**
+     * Calculates the Mean Squared Error between two histograms
+     * @param h1 the first histogram
+     * @param h2 the second histogram
+     * @return the Mean Squared Error (MSE)
+     */
+    public static double MSE(int[]h1, int[] h2){
+
+        int numPixels1 = 0;
+        int numPixels2 = 0;
+
+        for(int i=0; i<h1.length; i++){
+            numPixels1 += h1[i];
+        }
+        for(int i=0; i<h2.length; i++){
+            numPixels2 += h2[i];
+        }
+
+        double mse = 0.0;
+
+        if (numPixels1 != numPixels2){
+            System.out.println("As imagens têm tamanhos diferentes!");
+            return -1.0;
+        } else {
+
+            for(int i=0; i<h1.length; i++){
+
+                double e1 = ((double)h1[i]/(double)numPixels1);
+                double e2 = ((double)h2[i]/(double)numPixels2);
+
+                e1 = e1 * (double)h1[i];
+                e2 = e2 * (double)h2[i];
+
+                double m = e1 - e2;
+
+                mse += Math.pow((double)(Math.abs(m)), 2.0);
+
+            }
+
+            mse = mse / (double)numPixels1;
+            return mse;
+        }
+    }
+
+    public static double PSNR(String file1, String file2) throws IOException{
+        int LMAX = 255;
+        //double MSE = Filter.MSE(Filter.getHistogram(file1), Filter.getHistogram(file2));
+        double MSE = Filter.MSE(file1, file2);
+        return 10.0 * Math.log10(Math.pow((double)LMAX, 2.0) / MSE);
+    }
+
+    private static int getMean(int[] h) {
+
+        int mean = 0;
+        int numPixels = 0;
+        for(int i=0; i<h.length; i++){
+            numPixels += h[i];
+            mean += h[i] * i;
+        }
+
+        mean = mean / numPixels;
+        return mean;
     }
 
 }

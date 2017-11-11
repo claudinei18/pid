@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -145,15 +146,31 @@ public class ImagemController {
                     System.out.println(imageFile+lastUsed);
                     if(nome.equals("Negativo")){
                         System.out.println("Negativo");
+                        System.out.println(params);
                         new DigitalNegative().filter(params);
                         lastUsed += "_negative";
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
                         jsonObject.put("nomeTransformacao", "Negativo Digital");
                         jsonObject.put("descricaoTransformacao", "O negativo digital ...");
 
@@ -368,6 +385,10 @@ public class ImagemController {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
 
@@ -405,12 +426,14 @@ public class ImagemController {
             }
         }
 
-        int[] h = Filter.getHistogram(imageFile);
         try {
+            int[] h = Filter.getHistogram(imageFile);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("histogramaImagemOriginal", Arrays.toString(h));
             jsonArray.put(jsonObject);
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

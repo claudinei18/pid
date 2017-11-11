@@ -415,7 +415,6 @@ public class ImagemController {
                         params2.add(2, ""+tam);
                         params2.add(3, "lowpass");
 
-
                         String s = object.get("valoresDaMascara").toString();
                         s=s.replace("[","");//replacing all [ to ""
                         s=s.substring(0,s.length()-2);//ignoring last two ]]
@@ -424,21 +423,34 @@ public class ImagemController {
                         String my_matrics[][] = new String[s1.length][s1.length];//declaring two dimensional matrix for input
 
                         int pos = 4;
+                        boolean temNegativo = false;
                         for(int j=0;j<s1.length;j++){
                             s1[j]=s1[j].trim();//ignoring all extra space if the string s1[i] has
                             String single_int[]=s1[j].split(",");//separating integers by ", "
 
                             for(int k=0;k<single_int.length;k++){
                                 my_matrics[j][k]=single_int[k];//adding single values
-                                System.out.println(my_matrics[j][k]);
+                                if(temNegativo == false ){
+                                    if(Integer.parseInt(my_matrics[j][k]) < 0){
+                                        temNegativo = true;
+                                    }
+                                }
                                 params2.add(pos++, ""+my_matrics[j][k]);
                             }
                         }
 
+                        String type = "lowpass";
+                        if(temNegativo == true){
+                            params2.remove(3);
+                            params2.add(3, "highpass");
+                            type = "highpass";
+                        }
+
+
                         System.out.println(params2);
                         new GenericMask().filter(params2);
 
-                        lastUsed += "_lowpass_mask " + tam+ "x" + tam;
+                        lastUsed += "_" + type + "_mask " + tam+ "x" + tam;
 
                         File file = new File(imageFile+lastUsed);
 

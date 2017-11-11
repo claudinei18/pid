@@ -206,6 +206,9 @@ public class ImagemController {
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Equalização de Histrograma");
                         jsonObject.put("descricaoTransformacao", "O histograma equalizado ...");
 
@@ -226,10 +229,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Laplace");
                         jsonObject.put("descricaoTransformacao", "A transformação de Laplace ...");
                         jsonArray.put(jsonObject);
@@ -242,10 +263,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Logarítmica");
                         jsonObject.put("descricaoTransformacao", "A transformação Logarítmica ...");
                         jsonArray.put(jsonObject);
@@ -259,10 +298,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Potência");
                         jsonObject.put("descricaoTransformacao", "A transformação de Potência ...");
                         jsonArray.put(jsonObject);
@@ -274,10 +331,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Mediana");
                         jsonObject.put("descricaoTransformacao", "A transformação de Mediana ...");
                         jsonArray.put(jsonObject);
@@ -289,10 +364,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "MIN");
                         jsonObject.put("descricaoTransformacao", "A transformação de MIN ...");
                         jsonArray.put(jsonObject);
@@ -304,10 +397,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "MAX");
                         jsonObject.put("descricaoTransformacao", "A transformação de MAX ...");
                         jsonArray.put(jsonObject);
@@ -330,12 +441,30 @@ public class ImagemController {
                         File fileimage1 = new File(image1);
                         File fileimage2 = new File(image2);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("urlImagem1" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage1.getName());
                         jsonObject.put("urlImagem2" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage2.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Soma");
                         jsonObject.put("descricaoTransformacao", "A transformação de Soma ...");
                         jsonArray.put(jsonObject);
@@ -357,12 +486,31 @@ public class ImagemController {
                         File fileimage1 = new File(image1);
                         File fileimage2 = new File(image2);
 
+
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("urlImagem1" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage1.getName());
                         jsonObject.put("urlImagem2" , ip + "/imagens/" + codeImagemOriginal + "/" + fileimage2.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Subtração");
                         jsonObject.put("descricaoTransformacao", "A transformação de Subtração ...");
                         jsonArray.put(jsonObject);
@@ -374,10 +522,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Tresholding");
                         jsonObject.put("descricaoTransformacao", "A transformação de Tresholding ...");
                         jsonArray.put(jsonObject);
@@ -391,10 +557,28 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Gaussiano");
                         jsonObject.put("descricaoTransformacao", "A transformação Gaussiana ...");
                         jsonArray.put(jsonObject);

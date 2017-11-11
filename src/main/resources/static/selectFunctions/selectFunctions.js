@@ -64,12 +64,49 @@ angular.module('pid')
             {nome: "Soma", imagem2: ""},
             {nome: "Subtração", imagem2: ""},
             {nome: "Gaussiano", gauss: 2},
-            {nome: "Máscara Genérica", dimensoesDaMascara: "", tag: "", valoresDaMascara: ""}
+            {nome: "Máscara Genérica", dimensoesDaMascara: "", valoresDaMascara: ""}
 
         ];
 
+        $scope.matrix = [[0]];
+
+        $scope.addColumn = function() {
+            $scope.matrix.forEach(function(row) {
+                row.push(0);
+            });
+        };
+
+        $scope.addRow = function() {
+            var columnCount = $scope.matrix[0].length;
+            var newRow = [];
+            for (var i = 0; i < columnCount; i++) {
+                newRow.push(0);
+            }
+            $scope.matrix.push(newRow);
+        };
+
+        $scope.deleteRow = function(idx) {
+            if (idx >= 0 && idx < $scope.matrix.length) {
+                $scope.matrix.splice(idx, 1);
+            }
+        };
+
+        $scope.deleteColumn = function(idx) {
+            if (idx >= 0 && idx < $scope.matrix[0].length) {
+                $scope.matrix.forEach(function(row) {
+                    row.splice(idx, 1);
+                });
+            }
+        };
+
 
         $scope.runTransformacoes = function () {
+
+            var index = $scope.functionsSelected.map(function(d) { return d['nome']; }).indexOf('Máscara Genérica')
+            if(index >= 0){
+                $scope.functionsSelected[index].valoresDaMascara = $scope.matrix;
+                $scope.functionsSelected[index].dimensoesDaMascara = $scope.matrix[0].length;
+            }
 
             var body = {
                 codeImagemOriginal: $rootScope.codigoImagem,

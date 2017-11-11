@@ -64,6 +64,8 @@ public class ImagemController {
             e.printStackTrace();
         }
 
+        Filter.toGray(imageFile.getAbsolutePath());
+
         JSONObject json = new JSONObject();
         try {
             json.put("path", path.toString());
@@ -110,7 +112,8 @@ public class ImagemController {
             try {
                 for (int i = 0; i < listOfFiles.length; i++) {
                     if (listOfFiles[i].isFile() && !listOfFiles[i].getName().equals(nomeImagem)
-                            && !listOfFiles[i].getAbsolutePath().equals(imagem2)) {
+                            && !listOfFiles[i].getAbsolutePath().equals(imagem2)
+                            && !listOfFiles[i].getName().equals(nomeImagem+"_grayscale")) {
                         listOfFiles[i].delete();
                     }
                 }
@@ -123,7 +126,7 @@ public class ImagemController {
 
         System.out.println(jsonArray3.length());
 
-        String lastUsed = "";
+        String lastUsed = "_grayscale";
         System.out.println("Array " + jsonArray3);
 
         List<String> params = null;
@@ -171,6 +174,7 @@ public class ImagemController {
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
                         jsonObject.put("mse" , mse);
                         jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Negativo Digital");
@@ -185,6 +189,19 @@ public class ImagemController {
 
                         File file = new File(imageFile+lastUsed);
 
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("id" , i);
                         jsonObject.put("fileName", file.getName());
@@ -192,7 +209,7 @@ public class ImagemController {
                         jsonObject.put("nomeTransformacao", "Equalização de Histrograma");
                         jsonObject.put("descricaoTransformacao", "O histograma equalizado ...");
 
-                        int[] h = Filter.getHistogram(imageFile + lastUsed);
+                        h = Filter.getHistogram(imageFile + lastUsed);
                         try {
                             jsonObject.put("histogramaEqualizado", Arrays.toString(h));
                             jsonArray.put(jsonObject);
@@ -296,9 +313,12 @@ public class ImagemController {
                         jsonArray.put(jsonObject);
                     }else if(nome.equals("Soma")){
                         System.out.println("Soma");
+
                         String image1 = object.getString("imagem2");
+                        Filter.toGray(image1);
+
                         String image2 = imageFile+lastUsed;
-                        params.set(0, object.getString("imagem2"));
+                        params.set(0, object.getString("imagem2") + "_grayscale");
                         params.set(1, imageFile+lastUsed);
                         System.out.println(params);
                         new SumImage().filter(params);
@@ -322,8 +342,10 @@ public class ImagemController {
                     }else if(nome.equals("Subtração")){
                         System.out.println("Subtração");
                         String image1 = object.getString("imagem2");
+                        Filter.toGray(image1);
+
                         String image2 = imageFile+lastUsed;
-                        params.set(0, object.getString("imagem2"));
+                        params.set(0, object.getString("imagem2") + "_grayscale");
                         params.set(1, imageFile+lastUsed);
                         System.out.println(params);
                         new SubtractImage().filter(params);
@@ -377,6 +399,72 @@ public class ImagemController {
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("nomeTransformacao", "Gaussiano");
                         jsonObject.put("descricaoTransformacao", "A transformação Gaussiana ...");
+                        jsonArray.put(jsonObject);
+                    }else if(nome.equals("Máscara Genérica")){
+                        System.out.println("Máscara Genérica");
+//                        String[] args2 = {imageFile+lastUsed, "3", "3", "lowpass", "1", "1", "1", "1", "1", "1", "1", "1", "1"};
+
+                        List<String> params2 = new ArrayList<String >();
+                        params2.add(0, imageFile+"_grayscale");
+
+
+
+                        int tam = object.getInt("dimensoesDaMascara");
+                        System.out.println(object.get("valoresDaMascara"));
+                        params2.add(1, ""+tam);
+                        params2.add(2, ""+tam);
+                        params2.add(3, "lowpass");
+
+
+                        String s = object.get("valoresDaMascara").toString();
+                        s=s.replace("[","");//replacing all [ to ""
+                        s=s.substring(0,s.length()-2);//ignoring last two ]]
+                        String s1[]=s.split("],");//separating all by "],"
+
+                        String my_matrics[][] = new String[s1.length][s1.length];//declaring two dimensional matrix for input
+
+                        int pos = 4;
+                        for(int j=0;j<s1.length;j++){
+                            s1[j]=s1[j].trim();//ignoring all extra space if the string s1[i] has
+                            String single_int[]=s1[j].split(",");//separating integers by ", "
+
+                            for(int k=0;k<single_int.length;k++){
+                                my_matrics[j][k]=single_int[k];//adding single values
+                                System.out.println(my_matrics[j][k]);
+                                params2.add(pos++, ""+my_matrics[j][k]);
+                            }
+                        }
+
+                        System.out.println(params2);
+                        new GenericMask().filter(params2);
+
+                        lastUsed += "_lowpass_mask " + tam+ "x" + tam;
+
+                        File file = new File(imageFile+lastUsed);
+
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
+                        jsonObject.put("nomeTransformacao", "Negativo Digital");
+                        jsonObject.put("descricaoTransformacao", "O negativo digital ...");
                         jsonArray.put(jsonObject);
                     }
 

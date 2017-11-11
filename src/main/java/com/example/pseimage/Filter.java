@@ -30,7 +30,6 @@ public class Filter {
 
     /**
      * Open a stored image
-     *
      * @param file the name of the stored image
      * @return
      */
@@ -38,8 +37,10 @@ public class Filter {
         this.file = file;
         try {
             File file2 = new File(file);
+            System.out.println(file2.getAbsolutePath());
             this.image = ImageIO.read(file2);
-            this.grayImage = this.toGray();
+//            this.image = ImageIO.read(getClass().getResourceAsStream(file));
+            //this.grayImage = this.toGray();
         } catch (IOException ex) {
             Logger.getLogger(PSEImage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,31 +49,48 @@ public class Filter {
 
     /**
      * Convert the image to 8 bits grayscale
-     *
      * @return the converted image
      */
     public BufferedImage toGray() {
-        for (int x = 0; x < image.getWidth(); x++) {
-            for (int y = 0; y < image.getHeight(); y++) {
+        for(int x=0; x<image.getWidth(); x++){
+            for(int y=0; y<image.getHeight(); y++){
                 int pixel = image.getRGB(x, y);
-                int alpha = (pixel >> 24) & 0xff;
-                int red = (pixel >> 16) & 0xff;
-                int green = (pixel >> 8) & 0xff;
-                int blue = pixel & 0xff;
+                int alpha = (pixel>>24)&0xff;
+                int red = (pixel>>16)&0xff;
+                int green = (pixel>>8)&0xff;
+                int blue = pixel&0xff;
 
-                int gray = (red + green + blue) / 3;
-                pixel = (alpha << 24) | (gray << 16) | (gray << 8) | gray;
+                int gray = (red+green+blue) / 3;
+                pixel = (alpha<<24) | (gray<<16) | (gray<<8) | gray;
                 image.setRGB(x, y, pixel);
             }
         }
-        this.storeImage(file + "_grayscale", image);
+        //this.storeImage("grayscale_"+file, image);
         return image;
+    }
+
+    public static void toGray(String file){
+        BufferedImage img = new Filter().openImage(file);
+        for(int x=0; x<img.getWidth(); x++){
+            for(int y=0; y<img.getHeight(); y++){
+                int pixel = img.getRGB(x, y);
+                int alpha = (pixel>>24)&0xff;
+                int red = (pixel>>16)&0xff;
+                int green = (pixel>>8)&0xff;
+                int blue = pixel&0xff;
+
+                int gray = (red+green+blue) / 3;
+                pixel = (alpha<<24) | (gray<<16) | (gray<<8) | gray;
+                img.setRGB(x, y, pixel);
+            }
+        }
+        new Filter().storeImage(file + "_grayscale", img);
     }
 
     /**
      * Store the image
      */
-    public void storeImage() {
+    public void storeImage(){
         try {
             ImageIO.write(image, "JPG", new File(filteredImage));
         } catch (IOException ex) {
@@ -80,7 +98,7 @@ public class Filter {
         }
     }
 
-    public void storeImage(String name, BufferedImage i) {
+    public void storeImage(String name, BufferedImage i){
         try {
             ImageIO.write(i, "JPG", new File(name));
         } catch (IOException ex) {
@@ -88,9 +106,10 @@ public class Filter {
         }
     }
 
-    public void setFilteredImageName(String type) {
-        filteredImage = file + "_" + type;
+    public void setFilteredImageName(String type){
+        filteredImage = file+"_"+type;
     }
+
     /**
      *
      * @param file
@@ -136,7 +155,7 @@ public class Filter {
         JFreeChart grafico = ChartFactory.createBarChart("Histograma", "Intensidade",
                 "Quantidade", ds, PlotOrientation.VERTICAL, false, false, false);
 
-        OutputStream fos = new FileOutputStream(file + "_histogram");
+        OutputStream fos = new FileOutputStream(file+"_histogram");
         ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
         fos.close();
     }
@@ -167,7 +186,7 @@ public class Filter {
         JFreeChart grafico = ChartFactory.createLineChart("FDP", "Intensidade",
                 "Probabilidade", ds, PlotOrientation.VERTICAL, false, false, false);
 
-        OutputStream fos = new FileOutputStream(file + "_fdp");
+        OutputStream fos = new FileOutputStream(file+"_fdp");
         ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
         fos.close();
     }
@@ -261,7 +280,7 @@ public class Filter {
         return 10.0 * Math.log10(Math.pow((double)LMAX, 2.0) / MSE);
     }
 
-    private static int getMean(int[] h) {
+    public static int getMean(int[] h) {
 
         int mean = 0;
         int numPixels = 0;

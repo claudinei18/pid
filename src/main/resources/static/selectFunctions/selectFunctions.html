@@ -96,6 +96,38 @@
                     <input class="form-control" type="number" ng-model="f.intensidade2">
                 </div>
             </div>
+            <div class="col-sm-8">
+                <div ng-if="f.hasOwnProperty('dimensoesDaMascara')">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th></th>
+                            <th ng-repeat="column in matrix[0] track by $index">
+                                <button class="btn btn-secondary" ng-disabled="matrix[0].length <= 1"
+                                        ng-click="deleteColumn($index)">
+                                    Delete
+                                </button>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="row in matrix">
+                            <th>
+                                <button class="btn btn-secondary" ng-disabled="matrix.length <= 1"
+                                        ng-click="deleteRow($index)">
+                                    Delete
+                                </button>
+                            </th>
+                            <td ng-repeat="cell in row track by $index">
+                                <input class="form-control" type="number" ng-model="row[$index]">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary" type="button" ng-click="addRow()">Add Row</button>
+                    <button class="btn btn-primary" type="button" ng-click="addColumn()">Add Column</button>
+                    <h3>As JSON:</h3>
+                    <pre><code>{{matrix | json}}</code></pre>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <div ng-if="f.hasOwnProperty('imagem2')">
                     <div class="input-group input-group-md">
@@ -389,11 +421,11 @@
                         <h5>{{imagemClicada.descricaoTransformacao}}</h5>
                         <div ng-show="imagemClicada.hasOwnProperty('mse')">
                             <h4>Erro Médio Quadrático</h4>
-                            <p>{{i.mse}}</p>
+                            <p>{{imagemClicada.mse}}</p>
                         </div>
                         <div ng-show="imagemClicada.hasOwnProperty('psnr')">
                             <h4>Relação Pico Sinal Ruído</h4>
-                            <p>{{i.psnr}}</p>
+                            <p>{{imagemClicada.psnr}}</p>
                         </div>
                     </div>
                 </div>
@@ -402,10 +434,18 @@
                         <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}" alt="" height="500"
                              width="500">
                     </div>
-                    <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlHistograma')">
-                        <div>
-                            <img class="img-responsive myBorderImage" src="{{imagemClicada.urlHistograma}}" alt=""
-                                 height="500" width="500">
+                    <div class="row">
+                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlHistograma')">
+                            <div>
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlHistograma}}" alt=""
+                                     height="500" width="500">
+                            </div>
+                        </div>
+                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdp')">
+                            <div>
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdp}}" alt=""
+                                     height="500" width="500">
+                            </div>
                         </div>
                     </div>
                 </div>

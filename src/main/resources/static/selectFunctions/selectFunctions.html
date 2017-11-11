@@ -387,6 +387,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h5>{{imagemClicada.descricaoTransformacao}}</h5>
+                        <div ng-show="imagemClicada.hasOwnProperty('mse')">
+                            <h4>Erro Médio Quadrático</h4>
+                            <p>{{i.mse}}</p>
+                        </div>
+                        <div ng-show="imagemClicada.hasOwnProperty('psnr')">
+                            <h4>Relação Pico Sinal Ruído</h4>
+                            <p>{{i.psnr}}</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

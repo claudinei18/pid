@@ -60,7 +60,7 @@ angular.module('pid')
             {nome: "MAX"},
             {nome: "Logarítmica", c: 1},
             {nome: "Potência", c: 1, gama: 1},
-            {nome: "Tresholding", limiar: 1, cor1: 1, cor2: 1},
+            {nome: "Tresholding", limiar: 1},
             {nome: "Soma", imagem2: ""},
             {nome: "Subtração", imagem2: ""},
             {nome: "Gaussiano", gauss: 2},

@@ -24,7 +24,7 @@
     <!-- loop through and display existing ingredients -->
     <li data-ng-repeat="f in functionsSelected | orderBy: 'nome' track by $index">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-10">
                 <ui-select ng-model="functionsSelected[$index]" theme="select2" ng-disabled="ctrl.disabled"
                            style="min-width: 300px;" title="Choose a person"
                            data-ng-change="changeFunction($index)">
@@ -41,7 +41,7 @@
                     </ui-select-choices>
                 </ui-select>
             </div>
-            <div class="col-sm-3" ng-show="functionsSelected[$index].nome == 'Gaussiano'">
+            <div class="col-sm-6" ng-show="functionsSelected[$index].nome == 'Gaussiano'">
                 <div class="alert alert-info">
                     <strong>C = 1 </strong>{1, 1};</br>
                     <strong>C = 2 </strong>{1, 2, 1};</br>
@@ -118,7 +118,7 @@
             </div>
 
             <!-- remove button -->
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <a href="" data-ng-show="f"
                    data-ng-click="functionsSelected.splice($index,1)">
                     [Remove]</a>

@@ -98,8 +98,7 @@
                         </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-primary" type="button" ng-click="addRow()">Add Row</button>
-                    <button class="btn btn-primary" type="button" ng-click="addColumn()">Add Column</button>
+                    <button class="btn btn-primary" type="button" ng-click="add()">Add Row</button>
                     <h3>As JSON:</h3>
                     <pre><code>{{matrix | json}}</code></pre>
                 </div>
@@ -136,7 +135,7 @@
 <div ng-repeat="i in imagens" id="Resultado">
     <div class="row" ng-show="i.hasOwnProperty('fileName')">
         <div class="col-md-7">
-            <img class="img-responsive myBorderImage" src="{{i.url}}" alt="">
+            <img class="img-responsive myBorderImage" ng-src="{{i.url}}?cb={{random()}}" alt="">
         </div>
         <div class="col-md-5">
             <h3>{{i.nomeTransformacao}}</h3>
@@ -151,7 +150,7 @@
                 <p>{{i.psnr}}</p>
             </div>
             <div ng-show="i.hasOwnProperty('urlHistograma')">
-                <img class="img-responsive myBorderImage" src="{{i.urlHistograma}}" alt="">
+                <img class="img-responsive myBorderImage" ng-src="{{i.urlHistograma}}" alt="">
             </div>
             <a class="btn btn-primary" ng-click="openModal(i)">View Project <span
                     class="glyphicon glyphicon-chevron-right"></span></a>

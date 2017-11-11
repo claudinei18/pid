@@ -70,6 +70,11 @@ angular.module('pid')
 
         $scope.matrix = [[0]];
 
+        $scope.add = function () {
+            $scope.addColumn()
+            $scope.addRow()
+        }
+
         $scope.addColumn = function() {
             $scope.matrix.forEach(function(row) {
                 row.push(0);
@@ -118,6 +123,10 @@ angular.module('pid')
 
         }
 
+
+        $scope.random = function () {
+            return (new Date()).toString();
+        }
 
         $scope.runFuntions = function (body) {
             waitingDialog.show('Running ... Please wait');

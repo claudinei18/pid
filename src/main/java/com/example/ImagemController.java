@@ -171,6 +171,8 @@ public class ImagemController {
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Negativo Digital");
                         jsonObject.put("descricaoTransformacao", "O negativo digital ...");
 

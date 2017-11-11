@@ -134,6 +134,10 @@
             <h3>{{i.nomeTransformacao}}</h3>
             <h4>Subheading</h4>
             <p>{{i.descricaoTransformacao}}</p>
+            <h4>Erro Médio Quadrático</h4>
+            <p>{{i.mse}}</p>
+            <h4>Relação Pico Sinal Ruído</h4>
+            <p>{{i.psnr}}</p>
             <div ng-show="i.hasOwnProperty('urlHistograma')">
                 <img class="img-responsive myBorderImage" src="{{i.urlHistograma}}" alt="">
             </div>

@@ -506,11 +506,11 @@ public class ImagemController {
                         Filter.toGray(image1);
 
                         String image2 = imageFile+lastUsed;
-                        params.set(0, object.getString("imagem2") + "_grayscale");
-                        params.set(1, imageFile+lastUsed);
+                        params.set(0, imageFile+lastUsed);
+                        params.set(1, object.getString("imagem2") + "_grayscale");
                         System.out.println(params);
                         new SubtractImage().filter(params);
-                        String[] aux = params.get(0).split("/");
+                        String[] aux = params.get(1).split("/");
                         String nomeAux = aux[aux.length - 1];
                         lastUsed += "_subtract "+ nomeAux;
 
@@ -519,6 +519,7 @@ public class ImagemController {
                         File fileimage2 = new File(image2);
 
 
+                        System.out.println(file.getAbsolutePath());
                         int[] h = Filter.getHistogram(file.getAbsolutePath());
 
                         Filter.plotHistogram(h, file.getAbsolutePath());

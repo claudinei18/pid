@@ -64,6 +64,7 @@ angular.module('pid')
             {nome: "Soma", imagem2: ""},
             {nome: "Subtração", imagem2: ""},
             {nome: "Gaussiano", gauss: 2},
+            {nome: "Limiarização Global"},
             {nome: "Máscara Genérica", dimensoesDaMascara: "", valoresDaMascara: ""}
 
         ];

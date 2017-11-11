@@ -389,6 +389,38 @@ public class ImagemController {
                         jsonObject.put("nomeTransformacao", "MIN");
                         jsonObject.put("descricaoTransformacao", "A transformação de MIN ...");
                         jsonArray.put(jsonObject);
+                    }else if(nome.equals("Limiarização Global")){
+                        System.out.println("Limiarização Global");
+                        new SimpleGlobalTresholding().filter(params);
+                        lastUsed += "_limiarização_global";
+
+                        File file = new File(imageFile+lastUsed);
+
+                        int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                        Filter.plotHistogram(h, file.getAbsolutePath());
+                        Filter.plotFDP(h, file.getAbsolutePath());
+
+                        double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
+                        System.out.println("Erro médio quadrático = "+mse);
+
+                        //double mseH = Filter.MSE(Filter.getHistogram(params.get(0)), Filter.getHistogram(params.get(1)));
+                        //System.out.println("Erro médio quadrático H = "+mseH);
+
+                        double psnr = Filter.PSNR(params.get(0), file.getAbsolutePath());
+                        System.out.println("Pico Relação Sinal Ruído = "+psnr);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("id" , i);
+                        jsonObject.put("fileName", file.getName());
+                        jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
+                        jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("mse" , mse);
+                        jsonObject.put("psnr" , psnr);
+                        jsonObject.put("nomeTransformacao", "Limiarização Global");
+                        jsonObject.put("descricaoTransformacao", "A Limiarização Global ...");
+                        jsonArray.put(jsonObject);
                     }
                     else if(nome.equals("MAX")){
                         System.out.println("MAX");

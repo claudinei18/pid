@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -464,6 +466,21 @@ public class ImagemController {
                         params.set(0, object.getString("imagem2") + "_grayscale");
                         params.set(1, imageFile+lastUsed);
                         System.out.println(params);
+
+                        BufferedImage bimg = ImageIO.read(new File(params.get(0)));
+                        int width          = bimg.getWidth();
+                        int height         = bimg.getHeight();
+                        System.out.println(width);
+                        System.out.println(height);
+
+
+                        bimg = ImageIO.read(new File(params.get(1)));
+                        width          = bimg.getWidth();
+                        height         = bimg.getHeight();
+                        System.out.println(width);
+                        System.out.println(height);
+
+
                         new SumImage().filter(params);
                         String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
@@ -496,7 +513,9 @@ public class ImagemController {
                         jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
                         jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
                         jsonObject.put("mse" , mse);
-                        jsonObject.put("psnr" , psnr);
+                        try{
+                            jsonObject.put("psnr" , psnr);
+                        }catch (Exception e){}
                         jsonObject.put("nomeTransformacao", "Soma");
                         jsonObject.put("descricaoTransformacao", "A transformação de Soma ...");
                         jsonArray.put(jsonObject);

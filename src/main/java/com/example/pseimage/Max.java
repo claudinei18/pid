@@ -13,7 +13,12 @@ import java.util.PriorityQueue;
  * @author Herbert
  */
 public class Max extends Filter implements Filterable{
-
+    
+    /*
+    * O filtro de máxima realça regiões claras da imagem. Ela aumenta o tamanho de
+    * objetos mais claros que o fundo e diminui o tamanho de objetos mais escuros
+    * que o fundo em que estão inseridos.
+    */
     @Override
     public String filter(List<String> params) {
         

@@ -13,7 +13,10 @@ import java.util.List;
  * @author Herbert
  */
 public class Logarithmic extends Filter implements Filterable{
-
+    /*
+    * O filtro logarítmico reduz o contraste da imagem em áreas de alta intensidade
+    * e aumenta o contraste em áreas de baixa intensidade. 
+    */
     @Override
     public String filter(List<String> params) {
         

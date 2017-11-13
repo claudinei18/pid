@@ -14,7 +14,12 @@ import java.util.PriorityQueue;
  * @author Herbert
  */
 public class Min extends Filter implements Filterable{
-
+    
+    /*
+    * O filtro de mínima realça regiões escuras da imagem. Ele aumenta o tamanho de
+    * objetos mais escuros que o fundo e diminui o tamanho de objetos mais claros
+    * que o fundo em que estão inseridos.
+    */
     @Override
     public String filter(List<String> params) {
         

@@ -15,7 +15,12 @@ import java.util.logging.Logger;
  * @author Herbert
  */
 public class SimpleGlobalTresholding extends Filter implements Filterable {
-
+    
+    /*
+    * A limiarização global simples binariza a imagem escolhendo automaticamente
+    * um limiar que irá dividir os pixels em dois grupos. Inicialmente o limiar 
+    * é a intensidade média da imagem.
+    */
     @Override
     public String filter(List<String> params) {
         try {
@@ -41,8 +46,10 @@ public class SimpleGlobalTresholding extends Filter implements Filterable {
                         g2 += h[i];
                     }
                 }
-                m1 = m1 / g1;
-                m2 = m2 / g2;
+                if(g1 != 0)
+                    m1 = m1 / g1;
+                if(g2 != 0)
+                    m2 = m2 / g2;
 
                 int newTreshold = (m1 + m2) / 2;
                 int diff = Math.abs(newTreshold - treshold);

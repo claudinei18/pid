@@ -22,7 +22,13 @@ public class Gaussian extends Filter implements Filterable{
     int[] gauss6 = {1, 6, 15, 20, 15, 6, 1};
     int[] gauss7 = {1, 7, 21, 35, 35, 21, 7, 1};
     int[] gauss8 = {1, 8, 28, 56, 70, 56, 28, 8, 1};
-
+    
+    /*
+    * O filtro Gaussiano é um filtro passa-baixas. ELe é utilizado para suavizar
+    * a imagem, sendo útil para remover ruído aleatório. Como efeito colateral,
+    * ele provoca suavização das bordas causando um efeito de imagem borrada que
+    * aumenta, conforme aumenta-se o tamanho da máscara de convolução.
+    */
     @Override
     public String filter(List<String> params) {
         this.openImage(params.get(0));

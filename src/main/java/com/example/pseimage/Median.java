@@ -13,6 +13,12 @@ import java.util.PriorityQueue;
  * @author Herbert
  */
 public class Median extends Filter implements Filterable{
+    
+    /*
+    * O filtro de mediana é um filtro não linear utilizado para remoção de ruídos 
+    * impulsivos (sal e pimenta) da imagem. Ele não lida tão bem com o ruído aleatório,
+    * porém não gera o efeito colateral de suavização de bordas.
+    */
 
     @Override
     public String filter(List<String> params) {

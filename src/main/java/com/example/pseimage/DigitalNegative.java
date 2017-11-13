@@ -12,6 +12,11 @@ import java.util.List;
  * @author Herbert
  */
 public class DigitalNegative extends Filter implements Filterable{
+    /*
+    * O filtro negativo converte uma imagem no seu complemento.
+    * Cada pixel da imagem é transformado no valor que falta para que o mesmo
+    * tenha valor máximo. 
+    */
     @Override
     public String filter(List<String> params) {         
         

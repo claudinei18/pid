@@ -13,7 +13,12 @@ import java.util.List;
  * @author Herbert
  */
 public class Laplace extends Filter implements Filterable{
-
+    
+    /*
+    * O filtro Laplaciano é um filtro passa-altas. Ele é utilizado para evidenciar
+    * as componentes de alta frequência da imagem (bordas). Como efeito colateral
+    * ele também realça ruídos existentes na imagem.
+    */
     @Override
     public String filter(List<String> params) {
         
@@ -25,15 +30,15 @@ public class Laplace extends Filter implements Filterable{
         laplaceMask.add("3");
         laplaceMask.add("3");
         laplaceMask.add("laplace");
+        laplaceMask.add("0");
         laplaceMask.add("-1");
+        laplaceMask.add("0");
         laplaceMask.add("-1");
+        laplaceMask.add("4");
         laplaceMask.add("-1");
+        laplaceMask.add("0");
         laplaceMask.add("-1");
-        laplaceMask.add("8");
-        laplaceMask.add("-1");
-        laplaceMask.add("-1");
-        laplaceMask.add("-1");
-        laplaceMask.add("-1");     
+        laplaceMask.add("0");     
         
         return new GenericMask().filter(laplaceMask);
     }

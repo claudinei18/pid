@@ -13,7 +13,12 @@ import java.util.List;
  */
 public class HistogramEqualization extends Filter implements Filterable{
     public static final int NUM_COLORS = 256;
-
+    
+    /*
+    * A equalização de histograma é utilizada para extender o contraste da imagem.
+    * Basicamente ela redistribui as intensidades da imagem de maneira que ocupem 
+    * todo o espectro de intensidades.
+    */
     @Override
     public String filter(List<String> params) {
         

@@ -70,6 +70,7 @@ angular.module('pid')
         ];
 
         $scope.matrix = [[0]];
+        $scope.somasEsubtracoes = [];
 
         $scope.add = function () {
             $scope.addColumn()
@@ -154,6 +155,7 @@ angular.module('pid')
                             $scope.desenharGraficoOutroHistograma(JSON.parse($scope.imagens[j].histogramaEqualizado));
                         }else if(nome == 'Soma' || nome == 'Subtração'){
                             console.log($scope.imagens[j])
+                            $scope.somasEsubtracoes.push($scope.imagens[j]);
                             $scope.urlImagem1 = $scope.imagens[j].urlImagem1;
                             $scope.urlImagem2 = $scope.imagens[j].urlImagem2;
                             $scope.urlImagemResultante = $scope.imagens[j].url;

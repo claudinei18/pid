@@ -525,8 +525,8 @@ public class ImagemController {
                         Filter.toGray(image1);
 
                         String image2 = imageFile+lastUsed;
-                        params.set(0, imageFile+lastUsed);
-                        params.set(1, object.getString("imagem2") + "_grayscale");
+                        params.set(0, object.getString("imagem2") + "_grayscale");
+                        params.set(1, imageFile+lastUsed);
                         System.out.println(params);
                         new SubtractImage().filter(params);
                         String[] aux = params.get(1).split("/");

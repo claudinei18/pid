@@ -19,7 +19,7 @@ public class SubtractImage extends Filter implements Filterable {
         
         BufferedImage img2 = this.openImage(params.get(0));
         BufferedImage img1 = this.openImage(params.get(1));
-        String[] aux = params.get(1).split("/");
+        String[] aux = params.get(0).split("/");
         String nomeAux = aux[aux.length - 1];
         this.setFilteredImageName("subtract "+nomeAux);
         

@@ -529,7 +529,7 @@ public class ImagemController {
                         params.set(1, imageFile+lastUsed);
                         System.out.println(params);
                         new SubtractImage().filter(params);
-                        String[] aux = params.get(1).split("/");
+                        String[] aux = params.get(0).split("/");
                         String nomeAux = aux[aux.length - 1];
                         lastUsed += "_subtract "+ nomeAux;
 

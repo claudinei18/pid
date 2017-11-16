@@ -145,6 +145,10 @@
                 <h4>Erro Médio Quadrático</h4>
                 <p>{{i.mse}}</p>
             </div>
+            <div ng-show="i.hasOwnProperty('mseH')">
+                <h4>Erro Médio Quadrático obtido através do Histograma</h4>
+                <p>{{i.mseH}}</p>
+            </div>
             <div ng-show="i.hasOwnProperty('psnr')">
                 <h4>Relação Pico Sinal Ruído</h4>
                 <p>{{i.psnr}}</p>
@@ -409,28 +413,32 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlHistograma')">
+                        <div>
+                            <img class="img-responsive myBorderImage"
+                                 src="{{imagemClicada.urlHistograma}}?cb={{random()}}" alt=""
+                                 height="500" width="500">
+                        </div>
+                    </div>
+                    <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdisp')">
+                        <div>
+                            <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdisp}}?cb={{random()}}"
+                                 alt=""
+                                 height="500" width="500">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-6">
-                        <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}?cb={{random()}}" alt="" height="500"
+                        <img class="img-responsive myBorderImage" src="{{imagemClicada.url}}?cb={{random()}}" alt=""
+                             height="500"
                              width="500">
                     </div>
-                    <div class="row">
-                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlHistograma')">
-                            <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlHistograma}}?cb={{random()}}" alt=""
-                                     height="500" width="500">
-                            </div>
-                        </div>
-                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdisp')">
-                            <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdisp}}?cb={{random()}}" alt=""
-                                     height="500" width="500">
-                            </div>
-                        </div>
-                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlDdensp')">
-                            <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlDdensp}}?cb={{random()}}" alt=""
-                                     height="500" width="500">
-                            </div>
+                    <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlDdensp')">
+                        <div>
+                            <img class="img-responsive myBorderImage" src="{{imagemClicada.urlDdensp}}?cb={{random()}}"
+                                 alt=""
+                                 height="500" width="500">
                         </div>
                     </div>
                 </div>

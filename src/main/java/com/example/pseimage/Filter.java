@@ -288,11 +288,8 @@ public class Filter {
 
             for(int i=0; i<h1.length; i++){
 
-                double e1 = ((double)h1[i]/(double)numPixels1);
-                double e2 = ((double)h2[i]/(double)numPixels2);
-
-                e1 = e1 * (double)h1[i];
-                e2 = e2 * (double)h2[i];
+                double e1 = (double)h1[i];
+                double e2 = (double)h2[i];
 
                 double m = e1 - e2;
 
@@ -300,7 +297,7 @@ public class Filter {
 
             }
 
-            mse = mse / (double)numPixels1;
+            mse = mse / (double)h1.length;
             return mse;
         }
     }

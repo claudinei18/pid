@@ -10,7 +10,7 @@ angular.module('pid')
 
         $scope.functionsSelected = [];
         $scope.functionsSelected.push('');
-        $scope.gaussOptions = ["2", "4", "6", "8"];
+        $scope.gaussOptions = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 
         /*ate agora:

@@ -23,7 +23,7 @@ public class HistogramEqualization extends Filter implements Filterable{
     public String filter(List<String> params) {
         
         this.openImage(params.get(0));
-        this.setFilteredImageName("histogram");
+        this.setFilteredImageName("hist");
         
         int[] histogram = new int[NUM_COLORS];
         int[] equalized = new int[NUM_COLORS];

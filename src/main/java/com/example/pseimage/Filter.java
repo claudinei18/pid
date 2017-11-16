@@ -160,8 +160,9 @@ public class Filter {
         fos.close();
     }
 
+
     /**
-     * Creates an image file with the graph of the Probability Density Function
+     * Creates an image file with the graph of the Probability Distribution Function
      * @param h the histogram from wich will be calculated the probabilities
      * @param file a name to indentify the file in the disk
      * @throws FileNotFoundException
@@ -178,15 +179,46 @@ public class Filter {
         }
 
         for(int i=0; i<h.length; i++){
+            density += (double)h[i] / numPixels;
+            ds.addValue(density, file, ""+i);
+        }
+
+        // cria o gráfico
+        JFreeChart grafico = ChartFactory.createLineChart("Função de Distribuição de Probabilidades", "Intensidade",
+                "Probabilidade", ds, PlotOrientation.VERTICAL, false, false, false);
+
+        OutputStream fos = new FileOutputStream(file + "_fdistp");
+        ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
+        fos.close();
+    }
+
+    /**
+     * Creates an image file with the graph of the Probability Density Function
+     * @param h the histogram from wich will be calculated the probabilities
+     * @param file a name to indentify the file in the disk
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static void plotfdp(int[] h, String file) throws FileNotFoundException, IOException{
+
+        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+        int numPixels = 0;
+        double density = 0.0;
+
+        for(int i=0; i<h.length; i++){
+            numPixels += h[i];
+        }
+
+        for(int i=0; i<h.length; i++){
             density = (double)h[i] / numPixels;
             ds.addValue(density, file, ""+i);
         }
 
         // cria o gráfico
-        JFreeChart grafico = ChartFactory.createLineChart("FDP", "Intensidade",
+        JFreeChart grafico = ChartFactory.createLineChart("Função de Densidade de Probabilidades", "Intensidade",
                 "Probabilidade", ds, PlotOrientation.VERTICAL, false, false, false);
 
-        OutputStream fos = new FileOutputStream(file+"_fdp");
+        OutputStream fos = new FileOutputStream(file + "_fdensp");
         ChartUtilities.writeChartAsJPEG(fos, grafico, 550, 400);
         fos.close();
     }

@@ -420,9 +420,15 @@
                                      height="500" width="500">
                             </div>
                         </div>
-                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdp')">
+                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlFdisp')">
                             <div>
-                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdp}}?cb={{random()}}" alt=""
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlFdisp}}?cb={{random()}}" alt=""
+                                     height="500" width="500">
+                            </div>
+                        </div>
+                        <div class="col-md-6" ng-show="imagemClicada.hasOwnProperty('urlDdensp')">
+                            <div>
+                                <img class="img-responsive myBorderImage" src="{{imagemClicada.urlDdensp}}?cb={{random()}}" alt=""
                                      height="500" width="500">
                             </div>
                         </div>

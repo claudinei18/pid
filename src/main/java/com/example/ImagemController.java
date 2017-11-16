@@ -161,6 +161,7 @@ public class ImagemController {
 
                         Filter.plotHistogram(h, file.getAbsolutePath());
                         Filter.plotFDP(h, file.getAbsolutePath());
+                        Filter.plotfdp(h, file.getAbsolutePath());
 
                         double mse = Filter.MSE(params.get(0), file.getAbsolutePath());
                         System.out.println("Erro médio quadrático = "+mse);
@@ -176,7 +177,8 @@ public class ImagemController {
                         jsonObject.put("fileName", file.getName());
                         jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName());
                         jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
-                        jsonObject.put("urlFdp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdp");
+                        jsonObject.put("urlFdisp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdistp");
+                        jsonObject.put("urlDdensp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdensp");
                         jsonObject.put("mse" , mse);
                         jsonObject.put("psnr" , psnr);
                         jsonObject.put("nomeTransformacao", "Negativo Digital");
@@ -737,10 +739,20 @@ public class ImagemController {
                     if (listOfFiles[i].isFile()) {
                         String fileName = listOfFiles[i].getName();
                         if(fileName.equals(nomeImagem + "_grayscale")){
+                            File file = new File(listOfFiles[i].getAbsolutePath());
+
+                            int[] h = Filter.getHistogram(file.getAbsolutePath());
+
+                            Filter.plotHistogram(h, file.getAbsolutePath());
+                            Filter.plotFDP(h, file.getAbsolutePath());
+                            Filter.plotfdp(h, file.getAbsolutePath());
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("id" , i);
                             jsonObject.put("fileName", fileName);
                             jsonObject.put("url" , ip + "/imagens/" + codeImagemOriginal + "/" + listOfFiles[i].getName());
+                            jsonObject.put("urlHistograma" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_histogram");
+                            jsonObject.put("urlFdisp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdistp_");
+                            jsonObject.put("urlDdensp" , ip + "/imagens/" + codeImagemOriginal + "/" + file.getName() + "_fdensp");
                             jsonObject.put("nomeTransformacao", "Tons de Cinza");
                             jsonObject.put("descricaoTransformacao", "A imagem em tons de cinza ...");
                             jsonArray.put(jsonObject);
@@ -759,6 +771,10 @@ public class ImagemController {
                     }
                 }
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

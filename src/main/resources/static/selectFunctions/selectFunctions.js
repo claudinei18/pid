@@ -52,7 +52,6 @@ angular.module('pid')
 
         $scope.functions = [
             {nome: "Negativo"},
-            {nome: "Histograma"},
             {nome: "Equalização de Histograma"},
             {nome: "Laplace"},
             {nome: "Mediana"},
@@ -134,6 +133,7 @@ angular.module('pid')
             waitingDialog.show('Running ... Please wait');
             $http.post('/rest/funcoes', body).then(function (response) {
                 if (response.data) {
+                    $scope.somasEsubtracoes = []
                     $scope.msg = "Post Data Submitted Successfully!";
                     console.log(response);
                     console.log(response.data)

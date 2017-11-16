@@ -16,16 +16,16 @@ public class Potency extends Filter implements Filterable{
 
     @Override
     public String filter(List<String> params) {
-        
+
         this.openImage(params.get(0));
         this.setFilteredImageName("potency");
-        
+
         int c = Integer.parseInt(params.get(1));
         double gama = Double.parseDouble(params.get(2));
-        
+
         //c = 25;
         //gama = 0.4;
-        
+
         for(int x=0; x<image.getWidth(); x++){
             for(int y=0; y<image.getHeight(); y++){
                 int pixel = image.getRGB(x, y);
@@ -33,11 +33,12 @@ public class Potency extends Filter implements Filterable{
                 double k = (double) p.gray;
                 //System.out.println(k);
                 int value = (int) (c * Math.pow(k, gama));
-                p.setRGB(value, value, value);  
+                value = Math.min(255, Math.max(0, value));
+                p.setRGB(value, value, value);
                 image.setRGB(x, y, p.getComposedPixel());
             }
         }
-        
+
         this.storeImage();
         return filteredImage;
     }

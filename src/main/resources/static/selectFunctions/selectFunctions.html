@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <ui-select ng-model="functionsSelected[$index]" theme="select2" ng-disabled="ctrl.disabled"
-                           style="min-width: 300px;" title="Choose a person"
+                           style="min-width: 300px;" title="Selecione um algoritmo"
                            data-ng-change="changeFunction($index)">
                     <ui-select-match placeholder="Selecione uma função para aplicar à imagem selecionada ...">
                         {{functionsSelected[$index].nome}}
@@ -139,7 +139,6 @@
         </div>
         <div class="col-md-5">
             <h3>{{i.nomeTransformacao}}</h3>
-            <h4>Subheading</h4>
             <p>{{i.descricaoTransformacao}}</p>
             <div ng-show="i.hasOwnProperty('mse')">
                 <h4>Erro Médio Quadrático</h4>
@@ -156,7 +155,7 @@
             <div ng-show="i.hasOwnProperty('urlHistograma')">
                 <img class="img-responsive myBorderImage" ng-src="{{i.urlHistograma}}?cb={{random()}}" alt="">
             </div>
-            <a class="btn btn-primary" ng-click="openModal(i)">View Project <span
+            <a class="btn btn-primary" ng-click="openModal(i)">Ver detalhes<span
                     class="glyphicon glyphicon-chevron-right"></span></a>
             <a target="_self" href="{{i.url}}" download="{{i.nomeTransformacao}}.png">Download</a>
         </div>
